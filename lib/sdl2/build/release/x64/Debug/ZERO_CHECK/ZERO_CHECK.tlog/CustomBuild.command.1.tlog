@@ -1,0 +1,10 @@
+^C:\USERS\CAL\DOWNLOADS\SDL2-2.26.4\SDL2-2.26.4\BUILD\RELEASE\CMAKEFILES\F5693D4499558A1B87A9BFB937538B0E\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4 -BC:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/SDL2.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

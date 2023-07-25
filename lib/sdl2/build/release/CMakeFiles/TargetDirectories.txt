@@ -1,0 +1,9 @@
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/sdl_headers_copy.dir
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/SDL2main.dir
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/SDL2.dir
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/SDL2-static.dir
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/SDL2_test.dir
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/uninstall.dir
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/INSTALL.dir
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/ALL_BUILD.dir
+C:/Users/cal/Downloads/SDL2-2.26.4/SDL2-2.26.4/build/release/CMakeFiles/ZERO_CHECK.dir
