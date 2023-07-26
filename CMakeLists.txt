@@ -12,22 +12,16 @@ add_executable(tetris src/main.cpp)
 
 # core include directories
 target_precompile_headers(tetris PRIVATE src/pch.h)
+
 target_include_directories(tetris
     PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
-# SDL2
-add_subdirectory(lib/sdl2)
-target_compile_definitions(tetris PRIVATE SDL_MAIN_HANDLED)
-target_include_directories(tetris PRIVATE lib/sdl2/include)
-target_link_libraries(tetris PRIVATE SDL2-static)
-
-# FMT
-add_subdirectory(lib/fmt)
-target_include_directories(tetris PUBLIC lib/fmt/include)
-target_link_libraries(tetris PUBLIC fmt::fmt)
-
+# build raylib
+add_subdirectory(lib/raylib)
+target_include_directories(tetris PRIVATE lib/raylib/src)
+target_link_libraries(tetris PRIVATE raylib)
 
 # compile definitions for different build configurations
 target_compile_definitions(

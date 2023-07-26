@@ -5,9 +5,23 @@ using software engineering best practices.
 
 ## Getting Started
 
+This project uses [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to link to external libraries.
+To download all required dependencies, clone with the following command:
+
+```bash
+git clone --recurse-submodules git@github.com:maze7/tetris.git
+```
+
+If you have already cloned the repository, but are missing submodules, use the following commands:
+
+```bash
+git submodule init
+git submodule update
+```
+
 ### Dependencies
 
-* ex. SDL2
+* [raylib](https://www.raylib.com/)
 
 ### Building the program
 
