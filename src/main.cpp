@@ -1,20 +1,27 @@
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
+
 #include "pch.h"
-#include "raylib.h"
+#include "core/game.h"
 
 int main(int argc, char* argv[])
 {
-	InitWindow(800, 600, "tetris");
-	SetTargetFPS(60);
+	Game game;
 
-	while (!WindowShouldClose())
+	auto prev = std::chrono::high_resolution_clock::now();
+
+	while (!game.should_exit())
 	{
-		BeginDrawing();
-		ClearBackground(Color(0, 0, 0, 0));
-		DrawText("Hello tetris!", 32, 32, 20, WHITE);
-		EndDrawing();
-	}
+		// calculate delta time for frame
+		auto now = std::chrono::high_resolution_clock::now();
+		auto delta = std::chrono::duration<float, std::chrono::seconds::period>(prev - now).count();
 
-	CloseWindow();
+		game.update(delta);
+		game.draw();
+
+		// update timings
+		prev = now;
+	}
 
 	return 0;
 }

@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS_PROFILE "${CMAKE_CXX_FLAGS_PROFILE} -O2")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
 
-add_executable(tetris src/main.cpp)
+add_executable(tetris src/main.cpp src/core/game_state.cpp src/core/game_state.h src/core/game.h src/core/game.cpp src/menu/menu_state.h src/menu/menu_state.cpp)
 
 # core include directories
 target_precompile_headers(tetris PRIVATE src/pch.h)
@@ -22,6 +22,9 @@ target_include_directories(tetris
 add_subdirectory(lib/raylib)
 target_include_directories(tetris PRIVATE lib/raylib/src)
 target_link_libraries(tetris PRIVATE raylib)
+
+# build raygui
+target_include_directories(tetris PRIVATE lib/raygui)
 
 # compile definitions for different build configurations
 target_compile_definitions(
