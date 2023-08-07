@@ -5,7 +5,7 @@
 Game::Game() {
 	InitWindow(800, 600, "Tetris");
 
-	m_current_state = std::make_unique<MenuState>();
+	m_current_state = std::make_unique<MenuState>(this);
 }
 
 Game::~Game() {
@@ -30,4 +30,8 @@ void Game::draw() {
 
 bool Game::should_exit() const {
 	return WindowShouldClose();
+}
+
+void Game::set_state(std::unique_ptr<GameState> new_state) {
+	m_current_state = std::move(new_state);
 }

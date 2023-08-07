@@ -12,6 +12,8 @@ public:
 	void update(float dt);
 	void draw();
 
+	void set_state(std::unique_ptr<GameState> new_state);
+
 	[[nodiscard]] bool should_exit() const;
 
 private:

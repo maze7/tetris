@@ -6,7 +6,8 @@
 class MenuState : public GameState
 {
 public:
-	MenuState();
+	MenuState() = delete;
+	MenuState(Game* game);
 	~MenuState() override;
 
 	void update(float dt) override;

@@ -1,6 +1,7 @@
 #include "menu_state.h"
+#include "core/game.h"
 
-MenuState::MenuState() {
+MenuState::MenuState(Game* game) : GameState(game) {
 	// load the (placeholder) tetris logo
 	m_logo = LoadTexture("res/tetris_logo.png");
 	m_crt_shader = LoadShader(0, "res/crt_shader.frag");
@@ -29,6 +30,10 @@ void MenuState::draw() {
 
 	// main menu buttons
 	GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2), 200, 50}, "PLAY");
-	GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 75), 200, 50}, "OPTIONS");
+
+	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 75), 200, 50}, "SCORES")) {
+		m_game->set_state(std::make_unique<DummyState>(m_game));
+	}
+
 	GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 150), 200, 50}, "EXIT");
 }
