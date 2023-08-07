@@ -8,7 +8,8 @@ MenuState::MenuState(Game* game) : GameState(game) {
 }
 
 MenuState::~MenuState() {
-	// free the logo image from the gpu
+	// free gpu resources
+	UnloadShader(m_crt_shader);
 	UnloadTexture(m_logo);
 }
 
