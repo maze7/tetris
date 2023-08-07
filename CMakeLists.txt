@@ -16,7 +16,7 @@ add_executable(tetris
     src/core/game.cpp
     src/menu/menu_state.h
     src/menu/menu_state.cpp
-        src/core/input.h src/core/message_bus.h)
+)
 
 # core include directories
 target_precompile_headers(tetris PRIVATE src/pch.h)
