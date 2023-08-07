@@ -1,3 +1,4 @@
+#include <game/play_state.h>
 #include "menu_state.h"
 #include "core/game.h"
 
@@ -30,7 +31,9 @@ void MenuState::draw() {
 	EndShaderMode();
 
 	// main menu buttons
-	GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2), 200, 50}, "PLAY");
+	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2), 200, 50}, "PLAY")) {
+		m_game->set_state(std::make_unique<PlayState>(m_game));
+	}
 
 	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 75), 200, 50}, "SCORES")) {
 		m_game->set_state(std::make_unique<DummyState>(m_game));
