@@ -14,5 +14,8 @@ public:
 	void draw() override;
 
 private:
-
+	void draw_stats();
+	void draw_next_block();
+	void draw_help();
+	void draw_grid();
 };
