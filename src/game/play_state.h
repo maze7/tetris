@@ -3,6 +3,11 @@
 #include "pch.h"
 #include "core/game_state.h"
 
+struct Block
+{
+	Color color = BLACK;
+};
+
 class PlayState : public GameState
 {
 public:
@@ -14,6 +19,8 @@ public:
 	void draw() override;
 
 private:
+	Block blocks[10][20];
+
 	void draw_stats();
 	void draw_next_block();
 	void draw_help();
