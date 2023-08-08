@@ -5,7 +5,7 @@
 
 struct Block
 {
-	Color color = BLACK;
+	Color color = ColorAlpha(BLACK, 0);
 };
 
 class PlayState : public GameState
