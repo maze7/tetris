@@ -15,11 +15,15 @@ add_executable(tetris
     src/core/game.cpp
     src/menu/menu_state.h
     src/menu/menu_state.cpp
+    src/menu/config_state.h
+    src/menu/config_state.cpp
     src/menu/score_state.h
     src/menu/score_state.cpp
     src/game/play_state.h
     src/game/play_state.cpp
     src/core/input.h
+    src/menu/config_state.h
+    src/menu/config_state.cpp
 )
 
 # core include directories

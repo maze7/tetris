@@ -1,5 +1,6 @@
 #include <game/play_state.h>
 #include "menu_state.h"
+#include "config_state.h"
 #include "core/game.h"
 #include "score_state.h"
 
@@ -36,9 +37,13 @@ void MenuState::draw() {
 		m_game->set_state(std::make_unique<PlayState>(m_game));
 	}
 
-	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 75), 200, 50}, "SCORES")) {
-		m_game->set_state(std::make_unique<ScoreState>(m_game));
+	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 60), 200, 50}, "SCORES")) {
+		m_game->set_state(std::make_unique<DummyState>(m_game));
+	}
+	
+	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 120), 200, 50}, "CONFIGURE")) {
+		m_game->set_state(std::make_unique<ConfigState>(m_game));
 	}
 
-	GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 150), 200, 50}, "EXIT");
+	GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 180), 200, 50}, "EXIT");
 }
