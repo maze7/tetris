@@ -3,7 +3,8 @@
 #include "menu/menu_state.h"
 
 Game::Game() {
-	InitWindow(800, 600, "Tetris");
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	InitWindow(1280, 720, "Tetris");
 
 	m_current_state = std::make_unique<MenuState>(this);
 }

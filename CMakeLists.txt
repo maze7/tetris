@@ -10,12 +10,18 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O2")
 
 add_executable(tetris
     src/main.cpp
-    src/core/game_state.cpp
     src/core/game_state.h
     src/core/game.h
     src/core/game.cpp
     src/menu/menu_state.h
     src/menu/menu_state.cpp
+    src/menu/config_state.h
+    src/menu/config_state.cpp
+    src/menu/score_state.h
+    src/menu/score_state.cpp
+    src/game/play_state.h
+    src/game/play_state.cpp
+    src/core/input.h
     src/menu/config_state.h
     src/menu/config_state.cpp
 )
