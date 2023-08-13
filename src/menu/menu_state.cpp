@@ -38,7 +38,7 @@ void MenuState::draw() {
 	}
 
 	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 60), 200, 50}, "SCORES")) {
-		m_game->set_state(std::make_unique<DummyState>(m_game));
+		m_game->set_state(std::make_unique<ScoreState>(m_game));
 	}
 	
 	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 120), 200, 50}, "CONFIGURE")) {
