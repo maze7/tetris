@@ -30,7 +30,7 @@ void Game::draw() {
 }
 
 bool Game::should_exit() const {
-	return WindowShouldClose();
+	return exit_requested || WindowShouldClose();
 }
 
 void Game::set_state(std::unique_ptr<GameState> new_state) {
