@@ -38,12 +38,18 @@ void MenuState::draw() {
 	}
 
 	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 60), 200, 50}, "SCORES")) {
-		m_game->set_state(std::make_unique<DummyState>(m_game));
+		m_game->set_state(std::make_unique<ScoreState>(m_game));
 	}
 	
 	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 120), 200, 50}, "CONFIGURE")) {
 		m_game->set_state(std::make_unique<ConfigState>(m_game));
 	}
 
-	GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 180), 200, 50}, "EXIT");
+	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 180), 200, 50}, "EXIT")){
+		m_game->request_exit();
+	}
+
+	// list group members, course code and year
+	DrawText("2805ICT - 2023", (screen_width/2 - MeasureText("2805ICT - 2023", 20)/2), (screen_height/2 + 275), 20, PURPLE);
+	DrawText("Bailey Binghanm-Wilson, Callan Acton and Nathan Wilson", (screen_width/2 - MeasureText("Bailey Binghanm-Wilson, Callan Acton and Nathan Wilson", 20) / 2), (screen_height / 2 + 300), 20, PURPLE);
 }
