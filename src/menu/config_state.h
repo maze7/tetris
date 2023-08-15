@@ -24,5 +24,6 @@ private:
 
 	float game_size = 10.0f;
 	std::string difficulty = "medium";
-	bool play_as_ai = false;
+	bool play_as_ai_toggle = false;
+	bool extended_game_toggle = false;
 };
