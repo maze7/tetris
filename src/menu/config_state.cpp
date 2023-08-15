@@ -57,21 +57,32 @@ void ConfigState::draw()
 	}
 	
 	//AI button
-	Rectangle ai_button = { screen_width / 2 - 100, screen_height / 2 +100, 200, 50 };
-	Rectangle ai_button_outline = { screen_width / 2 - 110, screen_height / 2 +80, 250, 60 };
+	Rectangle ai_button = { screen_width / 2 - 211, screen_height / 2 +100, 200, 50 };
+	Rectangle ai_button_outline = { screen_width / 2 - 220, screen_height / 2 +80, 250, 60 };
+	
+	//extended game button
+	Rectangle extended_game_button = { screen_width / 2 + 10, screen_height / 2 +100, 200, 50 };
+	Rectangle extended_game_outline = { screen_width / 2, screen_height / 2 +80, 250, 60 };
 
 	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             if (CheckCollisionPointRec(GetMousePosition(), ai_button)) {
-                play_as_ai = !play_as_ai;
+                play_as_ai_toggle = !play_as_ai_toggle;
+            }
+			if (CheckCollisionPointRec(GetMousePosition(), extended_game_button)) {
+                extended_game_toggle = !extended_game_toggle;
             }
 			if (CheckCollisionPointRec(GetMousePosition(), game_width_rec) || CheckCollisionPointRec(GetMousePosition(), game_height_rec)) {
                 width_text = !width_text;
             }	
         }
 
-	DrawRectangleLines(screen_width / 2 - 101, screen_height / 2 + 99, 202, 52, WHITE);
-	DrawRectangleRec(ai_button, play_as_ai ? GREEN : RED);
-	DrawText("Play as AI", screen_width / 2 -50, screen_height / 2 + 115, 20, BLACK);
+	DrawRectangleLines(screen_width / 2 - 212, screen_height / 2 + 99, 202, 52, WHITE);
+	DrawRectangleRec(ai_button, play_as_ai_toggle ? GREEN : RED);
+	DrawText("Play as AI", screen_width / 2 - 160, screen_height / 2 + 115, 20, BLACK);
+
+	DrawRectangleLines(screen_width / 2 + 9, screen_height / 2 + 99, 202, 52, WHITE);
+	DrawRectangleRec(extended_game_button, extended_game_toggle ? GREEN : RED);
+	DrawText("Extended Game", screen_width / 2 + 35, screen_height / 2 + 115, 20, BLACK);
 	
 	//Main menu button
 	if (GuiButton({ static_cast<float>(screen_width/2 - 100), static_cast<float>(screen_height/2 + 200), 200, 50}, "MAIN MENU")) {
