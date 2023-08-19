@@ -1,5 +1,7 @@
+#include <menu/menu_state.h>
 #include "pch.h"
 #include "play_state.h"
+#include "core/game.h"
 
 PlayState::PlayState(Game* game) : GameState(game) {
 	blocks[0][0].color = RED;
@@ -16,7 +18,8 @@ PlayState::~PlayState() {
 }
 
 void PlayState::update(float dt) {
-
+	if (IsKeyPressed(KEY_ESCAPE))
+		m_show_dialog = !m_show_dialog;
 }
 
 void PlayState::draw() {
@@ -63,6 +66,25 @@ void PlayState::draw_grid() {
 	for (int x = 0; x < 10; x++) {
 		for (int y = 0; y < 20; y++) {
 			DrawRectangle(left + (x * 32) + border_width, top + (y * 32) + border_width, 32, 32, blocks[x][y].color);
+		}
+	}
+
+	// draw quit dialog
+	if (m_show_dialog) {
+		// box background & border
+		DrawRectangle(GetScreenWidth()/2 - 205, GetScreenHeight()/2 - 105, 410, 210, DARKGRAY);
+		DrawRectangle(GetScreenWidth()/2 - 200, GetScreenHeight()/2 - 100, 400, 200, LIGHTGRAY);
+
+		// dialog text
+		DrawText("Do you want to exit?", GetScreenWidth()/2 - 110, GetScreenHeight()/2 - 25, 20, BLACK);
+
+		// exit button
+		if (GuiButton({ (float)GetScreenWidth()/2 - 190, (float)GetScreenHeight()/2 + 40, 180, 50}, "Yes")) {
+			m_game->set_state(std::make_unique<MenuState>(m_game));
+		}
+
+		if (GuiButton({ (float)GetScreenWidth()/2 + 10, (float)GetScreenHeight()/2 + 40, 180, 50}, "No")) {
+			m_show_dialog = false;
 		}
 	}
 }

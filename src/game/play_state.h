@@ -19,6 +19,7 @@ public:
 	void draw() override;
 
 private:
+	bool m_show_dialog = false;
 	Block blocks[10][20];
 
 	void draw_stats();

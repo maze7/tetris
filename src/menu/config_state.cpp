@@ -31,11 +31,11 @@ void ConfigState::draw()
 	DrawText(config_text, (screen_width / 2 - config_text_width/2), 50, 70, PURPLE);
 
 	//Game width and height boxes
-	Rectangle game_width_rec = { screen_width / 2 - 150, screen_height/3.5, 100, 30 };
-	Rectangle game_height_rec = { screen_width / 2 + 50, screen_height/3.5, 100, 30 };
+	Rectangle game_width_rec = { (float)screen_width / 2 - 150, (float) screen_height/3.5f, 100, 30 };
+	Rectangle game_height_rec = { (float)screen_width / 2 + 50, (float) screen_height/3.5f, 100, 30 };
 
-	DrawText("Game Width", (screen_width / 2 - 220), screen_height/3.5 + 10, 10, PURPLE);
-	DrawText("Game Height", (screen_width / 2 - 20), screen_height/3.5 + 10, 10, PURPLE);
+	DrawText("Game Width", (screen_width / 2 - 220), screen_height/3.5f + 10, 10, PURPLE);
+	DrawText("Game Height", (screen_width / 2 - 20), screen_height/3.5f + 10, 10, PURPLE);
 
 	GuiTextBox(game_width_rec, game_width, 256, width_text);
 	GuiTextBox(game_height_rec, game_height, 256, !width_text);
@@ -57,12 +57,12 @@ void ConfigState::draw()
 	}
 	
 	//AI button
-	Rectangle ai_button = { screen_width / 2 - 211, screen_height / 2 +100, 200, 50 };
-	Rectangle ai_button_outline = { screen_width / 2 - 220, screen_height / 2 +80, 250, 60 };
+	Rectangle ai_button = { (float)screen_width / 2 - 211, (float)screen_height / 2 + 100, 200, 50 };
+	Rectangle ai_button_outline = { (float) screen_width / 2 - 220, (float)screen_height / 2 +80, 250, 60 };
 	
 	//extended game button
-	Rectangle extended_game_button = { screen_width / 2 + 10, screen_height / 2 +100, 200, 50 };
-	Rectangle extended_game_outline = { screen_width / 2, screen_height / 2 +80, 250, 60 };
+	Rectangle extended_game_button = { (float) screen_width / 2 + 10, (float)screen_height / 2 +100, 200, 50 };
+	Rectangle extended_game_outline = { (float)screen_width / 2, (float)screen_height / 2 +80, 250, 60 };
 
 	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             if (CheckCollisionPointRec(GetMousePosition(), ai_button)) {

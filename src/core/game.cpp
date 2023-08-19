@@ -5,6 +5,7 @@
 Game::Game() {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(1280, 720, "Tetris");
+	SetExitKey(KEY_NULL);
 
 	m_current_state = std::make_unique<MenuState>(this);
 }
