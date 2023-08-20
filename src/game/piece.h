@@ -11,28 +11,32 @@ public:
 
     int x() const { return m_x; }
     int y() const { return m_y; }
-    int width() const { return 2; }
-    int height() const { return 2; }
+    int width() const { return 3; }
+    int height() const { return 3; }
 
 private:
     // temporary L piece for prototype
-    int orientations[4][4] = {
+    int orientations[4][9] = {
         {
-            1, 1,
-            1, 0
+            0, 0, 0,
+            1, 1, 0,
+            0, 1, 1,
         },
         {
-            1, 1,
-            0, 1
+            0, 1, 0,
+            1, 1, 0,
+            1, 0, 0,
         },
         {
-            0, 1,
-            1, 1
+                0, 0, 0,
+                1, 1, 0,
+                0, 1, 1,
         },
         {
-            1, 0,
-            1, 1
-        }
+                0, 1, 0,
+                1, 1, 0,
+                1, 0, 0,
+        },
     };
 
     int m_x;

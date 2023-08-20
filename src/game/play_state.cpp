@@ -3,7 +3,7 @@
 #include "play_state.h"
 #include "core/game.h"
 
-PlayState::PlayState(Game* game) : GameState(game), m_piece(4, 0) {
+PlayState::PlayState(Game* game) : GameState(game), m_piece(4, -1) {
 
 }
 
@@ -92,7 +92,8 @@ void PlayState::draw_stats() {
     DrawText("Score: 0", left + 16, top + 92, 18, WHITE);
     DrawText("Lines Eliminated: 0", left + 16, top + 120, 18, WHITE);
     DrawText("Current Level: 0", left + 16, top + 148, 18, WHITE);
-    DrawText("Mode: Player", left + 16, top + 176, 18, WHITE);
+    DrawText("Player Mode: Player", left + 16, top + 176, 18, WHITE);
+    DrawText("Game Mode: Normal", left + 16, top + 204, 18, WHITE);
 }
 
 void PlayState::draw_next_block() {
@@ -108,11 +109,11 @@ void PlayState::draw_next_block() {
     DrawRectangle(left, top, rect_width + (border_width*2), rect_height + (border_width*2), GRAY);
     DrawRectangle(left + border_width, top + border_width, rect_width, rect_height, BLACK);
 
-    int grid[2][2] = { 1, 1, 0, 1 };
+    int grid[2][2] = { 1, 1, 1, 1 };
     for (int x = 0; x < 2; x++) {
         for (int y = 0; y < 2; y++) {
             if (grid[x][y]) {
-                DrawRectangle(left + (x * 32) + border_width + 8, top + (y * 32) + border_width + 8, 32, 32, RED);
+                DrawRectangle(left + (x * 32) + border_width + 8, top + (y * 32) + border_width + 8, 32, 32, YELLOW);
             }
         }
     }
