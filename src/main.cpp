@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	while (!game.should_exit()) {
 		// calculate delta time for frame
 		auto now = std::chrono::high_resolution_clock::now();
-		auto delta = std::chrono::duration<float, std::chrono::seconds::period>(prev - now).count();
+		auto delta = std::chrono::duration<float, std::chrono::seconds::period>(now - prev).count();
 
 		game.update(delta);
 		game.draw();
