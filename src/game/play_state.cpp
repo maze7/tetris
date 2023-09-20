@@ -22,14 +22,14 @@ void PlayState::update(float dt) {
         }
 
         // rotate block clockwise
-        if (IsKeyPressed(KEY_R)) {
+        if (IsKeyPressed(KEY_UP)) {
             m_piece.rotate();
         }
 
         // move block left / right
-        if (IsKeyPressed(KEY_A) && (m_piece.x() > 0)) {
+        if (IsKeyPressed(KEY_LEFT) && (m_piece.x() > 0)) {
             m_piece.move(-1, 0);
-        } else if (IsKeyPressed(KEY_D) && (m_piece.x() + m_piece.width()) < k_board_width) {
+        } else if (IsKeyPressed(KEY_RIGHT) && (m_piece.x() + m_piece.width()) < k_board_width) {
             m_piece.move(1, 0);
         }
     }
