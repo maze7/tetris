@@ -51,5 +51,5 @@ void MenuState::draw() {
 
 	// list group members, course code and year
 	DrawText("2805ICT - 2023", (screen_width/2 - MeasureText("2805ICT - 2023", 20)/2), (screen_height/2 + 275), 20, PURPLE);
-	DrawText("Bailey Binghanm-Wilson, Callan Acton and Nathan Wilson", (screen_width/2 - MeasureText("Bailey Binghanm-Wilson, Callan Acton and Nathan Wilson", 20) / 2), (screen_height / 2 + 300), 20, PURPLE);
+	DrawText("Bailey Bingham-Wilson, Callan Acton and Nathan Wilson", (screen_width/2 - MeasureText("Bailey Bingham-Wilson, Callan Acton and Nathan Wilson", 20) / 2), (screen_height / 2 + 300), 20, PURPLE);
 }
