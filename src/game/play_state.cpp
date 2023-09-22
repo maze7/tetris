@@ -14,7 +14,7 @@ PlayState::~PlayState() {
 }
 
 void PlayState::update(float dt) {
-    // move piece downards until bottom of board
+    // move piece downwards until bottom of board
     if ((m_piece.y() + m_piece.height()) < 20) {
         m_tick += dt;
 
