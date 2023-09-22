@@ -3,6 +3,8 @@
 #include "pch.h"
 #include "core/game_state.h"
 #include "piece.h"
+#include "commands.h"
+#include "input.h"
 
 struct Block
 {
@@ -28,7 +30,4 @@ private:
 	void draw_next_block();
 	void draw_help();
 	void draw_grid();
-
-    static constexpr int k_board_width = 10;
-    static constexpr int k_board_height = 20;
 };

@@ -1,12 +1,14 @@
 #pragma once
 
+// forward declare commands that can act upon a piece
+class MoveCommand;
+class RotateCommand;
+
 class Piece
 {
 public:
     Piece(int x, int y) : m_x(x), m_y(y), m_orientation(0) {}
 
-    void rotate();
-    void move(int x, int y);
     void draw(int offset_x, int offset_y);
 
     int x() const { return m_x; }
@@ -46,4 +48,8 @@ private:
     // temporary constants
     static constexpr int k_block_size = 32;
     static constexpr Color k_piece_color = RED;
+
+private:
+	friend class MoveCommand;
+	friend class RotateCommand;
 };

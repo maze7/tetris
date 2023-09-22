@@ -1,14 +1,5 @@
 #include "piece.h"
 
-void Piece::rotate() {
-    m_orientation = (m_orientation + 1) % 4;
-}
-
-void Piece::move(int x, int y) {
-    m_x += x;
-    m_y += y;
-}
-
 void Piece::draw(int offset_x, int offset_y) {
     for (int x = 0; x < width(); x++) {
         for (int y = 0; y < height(); y++) {

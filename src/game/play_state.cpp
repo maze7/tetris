@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "play_state.h"
 #include "core/game.h"
+#include "commands.h"
+#include "core/config.h"
 
 PlayState::PlayState(Game* game) : GameState(game), m_piece(4, -1) {
 
@@ -18,20 +20,15 @@ void PlayState::update(float dt) {
 
         if (m_tick >= 0.75) {
             m_tick = 0;
-            m_piece.move(0, 1);
+
+			// move piece down once per tick
+			MoveCommand(0, 1).execute(m_piece);
         }
 
-        // rotate block clockwise
-        if (IsKeyPressed(KEY_UP)) {
-            m_piece.rotate();
-        }
-
-        // move block left / right
-        if (IsKeyPressed(KEY_LEFT) && (m_piece.x() > 0)) {
-            m_piece.move(-1, 0);
-        } else if (IsKeyPressed(KEY_RIGHT) && (m_piece.x() + m_piece.width()) < k_board_width) {
-            m_piece.move(1, 0);
-        }
+		// get input command from user (or eventually AI system)
+		auto command = InputSystem::handle_input();
+		if (command)
+			command->execute(m_piece);
     }
 
     // exit dialog
@@ -138,12 +135,12 @@ void PlayState::draw_grid() {
 	DrawRectangle(left + border_width, top + border_width, rect_width, rect_height, BLACK);
 
 	// Draw vertical grid lines
-	for (int x = 1; x < k_board_width; x++) {
+	for (int x = 1; x < Config::k_board_width; x++) {
 		DrawLine((left + border_width) + (x * 32), top + border_width, (left + border_width) + (x * 32), bottom + 4, DARKGRAY);
 	}
 
 	// Draw horizontal grid lines
-	for (int y = 1; y < k_board_height; y++) {
+	for (int y = 1; y < Config::k_board_height; y++) {
 		DrawLine(left + border_width, top + border_width + (y * 32), right + 4, top + border_width + (y * 32), DARKGRAY);
 	}
 
