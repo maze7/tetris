@@ -35,3 +35,4 @@ public:
 		piece.m_orientation = (piece.m_orientation + 1) % 4;
 	}
 };
+

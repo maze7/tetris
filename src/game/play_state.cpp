@@ -25,7 +25,7 @@ void PlayState::update(float dt) {
 			MoveCommand(0, 1).execute(m_piece);
         }
 
-		// get input command from user (or eventually AI system)
+		// get input command from user
 		auto command = InputSystem::handle_input();
 		if (command)
 			command->execute(m_piece);
