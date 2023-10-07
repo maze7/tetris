@@ -10,8 +10,12 @@ std::unique_ptr<Command> InputSystem::handle_input() {
 	// move block left / right
 	if (IsKeyPressed(KEY_LEFT)) {
 		return std::make_unique<MoveCommand>(-1, 0);
-	} else if (IsKeyPressed(KEY_RIGHT)) {
+	} 
+	else if (IsKeyPressed(KEY_RIGHT)) {
 		return std::make_unique<MoveCommand>(1, 0);
+	}
+	else if (IsKeyPressed(KEY_DOWN)) {
+		return std::make_unique<MoveCommand>(0, 1);
 	}
 
 	return nullptr;
