@@ -3,7 +3,7 @@
 #include "pch.h"
 #include "core/game_state.h"
 #include "piece.h"
-#include "commands.h"
+#include "commands/command.h"
 #include "input.h"
 
 struct Block
@@ -20,6 +20,8 @@ public:
 
 	void update(float dt) override;
 	void draw() override;
+
+	Game* game() { return m_game; }
 
 private:
     float m_tick = 0;

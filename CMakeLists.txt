@@ -26,8 +26,9 @@ add_executable(tetris
         src/game/piece.cpp src/game/piece.h
         src/game/input.h
         src/game/input.cpp
-        src/game/commands.h
+        src/commands/command.h
         src/core/config.h
+        src/commands/move_command.cpp
 )
 
 # core include directories

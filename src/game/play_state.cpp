@@ -2,7 +2,8 @@
 #include "pch.h"
 #include "play_state.h"
 #include "core/game.h"
-#include "commands.h"
+#include "commands/move_command.h"
+#include "commands/rotate_command.h"
 #include "core/config.h"
 
 PlayState::PlayState(Game* game) : GameState(game), m_piece(4, -1) {
@@ -22,13 +23,13 @@ void PlayState::update(float dt) {
             m_tick = 0;
 
 			// move piece down once per tick
-			MoveCommand(0, 1).execute(m_piece);
+			MoveCommand(0, 1).execute(m_piece, *this);
         }
 
 		// get input command from user
 		auto command = InputSystem::handle_input();
 		if (command)
-			command->execute(m_piece);
+			command->execute(m_piece, *this);
     }
 
     // exit dialog

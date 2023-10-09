@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "input.h"
+#include "commands/move_command.h"
+#include "commands/rotate_command.h"
 
 std::unique_ptr<Command> InputSystem::handle_input() {
 	// rotate block clockwise
