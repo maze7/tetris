@@ -15,7 +15,8 @@ void ConfigState::update(float dt)
 }
 
 
-bool width_text = true;
+bool width_text = false;
+bool height_text = false;
 char game_width[256];
 char game_height[256];
 
@@ -38,7 +39,7 @@ void ConfigState::draw()
 	DrawText("Game Height", (screen_width / 2 - 20), screen_height/3.5f + 10, 10, PURPLE);
 
 	GuiTextBox(game_width_rec, game_width, 256, width_text);
-	GuiTextBox(game_height_rec, game_height, 256, !width_text);
+	GuiTextBox(game_height_rec, game_height, 256, height_text);
 
 	//Difficulty title and boxes
 	const char *difficulty_text = "DIFFICULTY";
@@ -47,13 +48,13 @@ void ConfigState::draw()
 	DrawText(difficulty_text, (screen_width / 2 - diff_text_width/2), screen_height/2.5, 30, PURPLE);
 
 	if (GuiButton({static_cast<float>(screen_width / 2 - 200), static_cast<float>(screen_height/2.5 + 50), 100, 50}, "EASY")){
-		difficulty = "easy";
+		m_game->config().difficulty = DifficultyLevel::Easy;
 	}
 	if (GuiButton({static_cast<float>(screen_width / 2 -50), static_cast<float>(screen_height/2.5 + 50), 100, 50}, "MEDIUM")){
-		difficulty = "medium";
+		m_game->config().difficulty = DifficultyLevel::Medium;
 	}
 	if (GuiButton({static_cast<float>(screen_width / 2 +100), static_cast<float>(screen_height/2.5 + 50), 100, 50}, "HARD")){
-		difficulty = "hard";
+		m_game->config().difficulty = DifficultyLevel::Hard;
 	}
 	
 	//AI button
@@ -65,23 +66,23 @@ void ConfigState::draw()
 	Rectangle extended_game_outline = { (float)screen_width / 2, (float)screen_height / 2 +80, 250, 60 };
 
 	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            if (CheckCollisionPointRec(GetMousePosition(), ai_button)) {
-                play_as_ai_toggle = !play_as_ai_toggle;
-            }
-			if (CheckCollisionPointRec(GetMousePosition(), extended_game_button)) {
-                extended_game_toggle = !extended_game_toggle;
-            }
-			if (CheckCollisionPointRec(GetMousePosition(), game_width_rec) || CheckCollisionPointRec(GetMousePosition(), game_height_rec)) {
-                width_text = !width_text;
-            }	
-        }
+		if (CheckCollisionPointRec(GetMousePosition(), ai_button)) {
+			m_game->config().game_mode = m_game->config().game_mode == GameMode::Player ? GameMode::AI : GameMode::Player;
+		}
+		if (CheckCollisionPointRec(GetMousePosition(), extended_game_button)) {
+			m_game->config().game_type = m_game->config().game_type == GameType::Normal ? GameType::Extended : GameType::Normal;
+		}
+
+		width_text = CheckCollisionPointRec(GetMousePosition(), game_width_rec);
+		height_text = CheckCollisionPointRec(GetMousePosition(), game_height_rec);
+	}
 
 	DrawRectangleLines(screen_width / 2 - 212, screen_height / 2 + 99, 202, 52, WHITE);
-	DrawRectangleRec(ai_button, play_as_ai_toggle ? GREEN : RED);
+	DrawRectangleRec(ai_button, m_game->config().game_mode == GameMode::AI ? GREEN : RED);
 	DrawText("Play as AI", screen_width / 2 - 160, screen_height / 2 + 115, 20, BLACK);
 
 	DrawRectangleLines(screen_width / 2 + 9, screen_height / 2 + 99, 202, 52, WHITE);
-	DrawRectangleRec(extended_game_button, extended_game_toggle ? GREEN : RED);
+	DrawRectangleRec(extended_game_button, m_game->config().game_type == GameType::Extended ? GREEN : RED);
 	DrawText("Extended Game", screen_width / 2 + 35, screen_height / 2 + 115, 20, BLACK);
 	
 	//Main menu button
