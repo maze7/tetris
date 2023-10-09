@@ -121,6 +121,8 @@ void PlayState::draw_help() {
 }
 
 void PlayState::draw_grid() {
+	const Config& cfg = m_game->config();
+
 	int border_width = 4;
 	int rect_width = 320;
 	int rect_height = 640;
@@ -135,12 +137,12 @@ void PlayState::draw_grid() {
 	DrawRectangle(left + border_width, top + border_width, rect_width, rect_height, BLACK);
 
 	// Draw vertical grid lines
-	for (int x = 1; x < Config::k_board_width; x++) {
+	for (int x = 1; x < cfg.board_width; x++) {
 		DrawLine((left + border_width) + (x * 32), top + border_width, (left + border_width) + (x * 32), bottom + 4, DARKGRAY);
 	}
 
 	// Draw horizontal grid lines
-	for (int y = 1; y < Config::k_board_height; y++) {
+	for (int y = 1; y < cfg.board_height; y++) {
 		DrawLine(left + border_width, top + border_width + (y * 32), right + 4, top + border_width + (y * 32), DARKGRAY);
 	}
 

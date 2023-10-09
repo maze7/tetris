@@ -1,8 +1,30 @@
 #pragma once
 
+enum class DifficultyLevel {
+	Easy,
+	Medium,
+	Hard
+};
+
+enum class GameMode {
+	Player,
+	AI,
+};
+
+enum class GameType {
+	Normal,
+	Extended
+};
+
 class Config
 {
 public:
-	static constexpr int k_board_width = 10;
-	static constexpr int k_board_height = 20;
+	Config() = default;
+
+	GameMode game_mode = GameMode::Player;
+	GameType game_type = GameType::Normal;
+	DifficultyLevel difficulty = DifficultyLevel::Medium;
+
+	int board_width = 10;
+	int board_height = 20;
 };

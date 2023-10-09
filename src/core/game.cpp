@@ -30,6 +30,10 @@ void Game::draw() {
 	EndDrawing();
 }
 
+Config& Game::config() {
+	return m_config;
+}
+
 bool Game::should_exit() const {
 	return exit_requested || WindowShouldClose();
 }
