@@ -5,6 +5,7 @@
 #include "commands/move_command.h"
 #include "commands/rotate_command.h"
 #include "core/config.h"
+#include <sstream>
 
 PlayState::PlayState(Game* game) : GameState(game), m_piece(4, -1) {
 
@@ -84,14 +85,18 @@ void PlayState::draw_stats() {
                   rect_width - border_width * 2,
                   (rect_height * 0.8), BLACK);
 
+	std::string player_mode_text = "Player Mode: ";
+	std::string game_type_text = "Game Type: ";
+	std::string difficulty_text = "Difficulty: ";
+
     // messy magic numbers for now, no point tidying up until we decide on a proper UI
     DrawText("Stats:", left + 16, top + 16, 20, WHITE);
     DrawText("Group: 8", left + 16, top + 64, 18, WHITE);
     DrawText("Score: 0", left + 16, top + 92, 18, WHITE);
     DrawText("Lines Eliminated: 0", left + 16, top + 120, 18, WHITE);
     DrawText("Current Level: 0", left + 16, top + 148, 18, WHITE);
-    DrawText("Player Mode: Player", left + 16, top + 176, 18, WHITE);
-    DrawText("Game Mode: Normal", left + 16, top + 204, 18, WHITE);
+    DrawText((player_mode_text + (m_game->config().game_mode == GameMode::Player ? "Player" : "AI")).c_str(), left + 16, top + 176, 18, WHITE);
+    DrawText((game_type_text + (m_game->config().game_type == GameType::Normal ? "Normal" : "Extended")).c_str(), left + 16, top + 204, 18, WHITE);
 }
 
 void PlayState::draw_next_block() {
