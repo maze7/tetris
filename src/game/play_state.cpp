@@ -8,7 +8,8 @@
 #include <sstream>
 
 PlayState::PlayState(Game* game) : GameState(game) {
-
+	m_piece.next_piece(rand() % 3);
+	m_next_piece_id = rand() % 3;
 }
 
 PlayState::~PlayState() {
@@ -125,14 +126,13 @@ void PlayState::draw_next_block() {
     DrawRectangle(left, top, rect_width + (border_width*2), rect_height + (border_width*2), GRAY);
     DrawRectangle(left + border_width, top + border_width, rect_width, rect_height, BLACK);
 
-    //int grid[2][2] = { 1, 1, 1, 1 };
-    //for (int x = 0; x < m; x++) {
-    //    for (int y = 0; y < 2; y++) {
-    //        if (grid[x][y]) {
-    //            DrawRectangle(left + (x * 32) + border_width + 8, top + (y * 32) + border_width + 8, 32, 32, YELLOW);
-    //        }
-    //    }
-    //}
+	for (int x = 0; x < 4; x++) {
+		for (int y = 0; y < 4; y++) {
+			if (s_pieces[m_next_piece_id].layout[0][x + y * 4]) {
+				DrawRectangle(left + (x * 32) + border_width + 8, top + (y * 32) + border_width + 8, 32, 32, s_pieces[m_next_piece_id].color);
+			}
+		}
+	}
 }
 
 void PlayState::draw_help() {

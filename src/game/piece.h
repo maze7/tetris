@@ -21,8 +21,11 @@ public:
 	// Current piece color
 	[[nodiscard]] Color color() const { return s_pieces[m_piece_id].color; }
 
+	// returns the id of the current piece in play
+	[[nodiscard]] int current_piece_id() const { return m_piece_id; }
+
 	// reset and start a new piece falling
-	//void next_piece(int piece_id);
+	void next_piece(int piece_id);
 
 	// draw the current piece to the board
 	void draw(int offset_x, int offset_y);
@@ -33,7 +36,7 @@ private:
 	int m_x 			= 4;
 	int m_y 			= -1;
 	int m_orientation 	= 0;
-	int m_piece_id 		= 1;
+	int m_piece_id 		= 0;
 
 	friend class MoveCommand;
 	friend class RotateCommand;
