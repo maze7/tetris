@@ -26,6 +26,8 @@ private:
 	std::unique_ptr<GameState> m_current_state = nullptr;
 	std::unique_ptr<GameState> m_next_state = nullptr;
 
+	Texture m_sound_on, m_sound_off;
+
 	Config m_config;
 	Music m_music;
 

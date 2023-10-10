@@ -7,10 +7,14 @@ Game::Game() : m_music(LoadMusicStream("res/tetris-audio.wav")) {
 	InitWindow(1280, 720, "Tetris");
 	SetExitKey(KEY_NULL);
 
+	m_sound_on = LoadTexture("res/sound_on.png");
+	m_sound_off = LoadTexture("res/sound_off.png");
 	m_current_state = std::make_unique<MenuState>(this);
 }
 
 Game::~Game() {
+	UnloadTexture(m_sound_on);
+	UnloadTexture(m_sound_off);
 	CloseWindow();
 	CloseAudioDevice();
 }
@@ -34,9 +38,19 @@ void Game::update(float dt) {
 }
 
 void Game::draw() {
-	// clear backbuffer for drawing
+	// clear back buffer for drawing
 	BeginDrawing();
 	ClearBackground(BLACK);
+
+	// Draw music mute/unmute icon (this should be visible on all screens)
+	DrawTexture(config().play_music ? m_sound_on : m_sound_off, GetScreenWidth() - 100, GetScreenHeight() - 100, WHITE);
+	Rectangle sound_button = { (float)GetScreenWidth() - 100, (float)GetScreenHeight() - 100, (float)m_sound_on.width, (float)m_sound_on.height };
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+		if (CheckCollisionPointRec(GetMousePosition(), sound_button)) {
+			config().play_music = !config().play_music;
+			SetMusicVolume(m_music, config().play_music ? 1.0 : 0.0);
+		}
+	}
 
 	// draw current game state
 	m_current_state->draw();
