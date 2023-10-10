@@ -17,31 +17,42 @@ PlayState::~PlayState() {
 
 void PlayState::update(float dt) {
     // move piece downwards until bottom of board
-    if ((m_piece.y() + m_piece.height()) < 20) {
-        m_tick += dt;
+	if (!m_paused) {
+		if ((m_piece.y() + m_piece.height()) < 20) {
+			m_tick += dt;
 
-        if (m_tick >= 0.75) {
-            m_tick = 0;
+			if (m_tick >= 0.75) {
+				m_tick = 0;
 
-			// move piece down once per tick
-			MoveCommand(0, 1).execute(m_piece, *this);
-        }
+				// move piece down once per tick
+				MoveCommand(0, 1).execute(m_piece, *this);
+			}
 
-		// get input command from user
-		auto command = InputSystem::handle_input();
-		if (command)
-			command->execute(m_piece, *this);
-    }
+			// get input command from user
+			auto command = InputSystem::handle_input();
+			if (command)
+				command->execute(m_piece, *this);
+		}
+	}
+
+	// Pause game
+	if (IsKeyPressed(KEY_P))
+		m_paused = !m_paused;
 
     // exit dialog
-	if (IsKeyPressed(KEY_ESCAPE))
+	if (IsKeyPressed(KEY_ESCAPE)) {
 		m_show_dialog = !m_show_dialog;
+		m_paused = m_show_dialog;
+	}
 }
 
 void PlayState::draw() {
 	draw_grid();
     draw_stats();
     draw_next_block();
+
+	if (m_paused)
+		DrawText("PAUSED", 25, GetScreenHeight() - 50, 30, WHITE);
 
     // draw quit dialog
     if (m_show_dialog) {
@@ -57,8 +68,10 @@ void PlayState::draw() {
             m_game->set_state(std::make_unique<MenuState>(m_game));
         }
 
+		// resume button
         if (GuiButton({ (float)GetScreenWidth()/2 + 10, (float)GetScreenHeight()/2 + 40, 180, 50}, "No")) {
             m_show_dialog = false;
+			m_paused = false;
         }
     }
 }

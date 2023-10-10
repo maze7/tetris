@@ -26,6 +26,7 @@ public:
 private:
     float m_tick = 0;
 	bool m_show_dialog = false;
+	bool m_paused = false;
 	Piece m_piece;
 
 	void draw_stats();

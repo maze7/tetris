@@ -34,6 +34,15 @@ void Game::update(float dt) {
 		SetMusicVolume(m_music, config().play_music ? 1.0 : 0.0);
 	}
 
+	// Toggle music when mute / unmute icon is pressed
+	Rectangle sound_button = { (float)GetScreenWidth() - 100, (float)GetScreenHeight() - 75, (float)m_sound_on.width, (float)m_sound_on.height };
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+		if (CheckCollisionPointRec(GetMousePosition(), sound_button)) {
+			config().play_music = !config().play_music;
+			SetMusicVolume(m_music, config().play_music ? 1.0 : 0.0);
+		}
+	}
+
 	m_current_state->update(dt);
 }
 
@@ -43,14 +52,7 @@ void Game::draw() {
 	ClearBackground(BLACK);
 
 	// Draw music mute/unmute icon (this should be visible on all screens)
-	DrawTexture(config().play_music ? m_sound_on : m_sound_off, GetScreenWidth() - 100, GetScreenHeight() - 100, WHITE);
-	Rectangle sound_button = { (float)GetScreenWidth() - 100, (float)GetScreenHeight() - 100, (float)m_sound_on.width, (float)m_sound_on.height };
-	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-		if (CheckCollisionPointRec(GetMousePosition(), sound_button)) {
-			config().play_music = !config().play_music;
-			SetMusicVolume(m_music, config().play_music ? 1.0 : 0.0);
-		}
-	}
+	DrawTexture(config().play_music ? m_sound_on : m_sound_off, GetScreenWidth() - 100, GetScreenHeight() - 75, WHITE);
 
 	// draw current game state
 	m_current_state->draw();

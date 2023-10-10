@@ -7,7 +7,7 @@
 MenuState::MenuState(Game* game) : GameState(game) {
 	// load the (placeholder) tetris logo
 	m_logo = LoadTexture("res/tetris_logo.png");
-	m_crt_shader = LoadShader(0, "res/crt_shader.frag");
+	m_crt_shader = LoadShader(nullptr, "res/crt_shader.frag");
 }
 
 MenuState::~MenuState() {
