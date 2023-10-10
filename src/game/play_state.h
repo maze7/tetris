@@ -27,7 +27,9 @@ private:
     float m_tick = 0;
 	bool m_show_dialog = false;
 	bool m_paused = false;
+
 	Piece m_piece;
+	int m_next_piece_id = 0;
 
 	void draw_stats();
 	void draw_next_block();

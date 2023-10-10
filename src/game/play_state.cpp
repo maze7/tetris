@@ -7,7 +7,7 @@
 #include "core/config.h"
 #include <sstream>
 
-PlayState::PlayState(Game* game) : GameState(game), m_piece(4, -1) {
+PlayState::PlayState(Game* game) : GameState(game) {
 
 }
 
@@ -114,8 +114,8 @@ void PlayState::draw_stats() {
 
 void PlayState::draw_next_block() {
     int border_width = 4;
-    int rect_width = 64 + 16;
-    int rect_height = 64 + 16;
+    int rect_width = 128 + 16;
+    int rect_height = 128 + 16;
     int main_rect_width = 320;
     int main_rect_height = 640;
 
@@ -125,14 +125,14 @@ void PlayState::draw_next_block() {
     DrawRectangle(left, top, rect_width + (border_width*2), rect_height + (border_width*2), GRAY);
     DrawRectangle(left + border_width, top + border_width, rect_width, rect_height, BLACK);
 
-    int grid[2][2] = { 1, 1, 1, 1 };
-    for (int x = 0; x < 2; x++) {
-        for (int y = 0; y < 2; y++) {
-            if (grid[x][y]) {
-                DrawRectangle(left + (x * 32) + border_width + 8, top + (y * 32) + border_width + 8, 32, 32, YELLOW);
-            }
-        }
-    }
+    //int grid[2][2] = { 1, 1, 1, 1 };
+    //for (int x = 0; x < m; x++) {
+    //    for (int y = 0; y < 2; y++) {
+    //        if (grid[x][y]) {
+    //            DrawRectangle(left + (x * 32) + border_width + 8, top + (y * 32) + border_width + 8, 32, 32, YELLOW);
+    //        }
+    //    }
+    //}
 }
 
 void PlayState::draw_help() {

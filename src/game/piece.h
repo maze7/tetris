@@ -1,55 +1,40 @@
 #pragma once
 
+#include "piece_definitions.h"
+
 // forward declare commands that can act upon a piece
 class MoveCommand;
 class RotateCommand;
-
 class Piece
 {
 public:
-    Piece(int x, int y) : m_x(x), m_y(y), m_orientation(0) {}
+	Piece() = default;
 
-    void draw(int offset_x, int offset_y);
+	// current piece position
+	[[nodiscard]] int x() const { return m_x; }
+	[[nodiscard]] int y() const { return m_y; }
 
-    int x() const { return m_x; }
-    int y() const { return m_y; }
-    int width() const { return 3; }
-    int height() const { return 3; }
+	// current piece width & height
+	[[nodiscard]] int width() const { return s_pieces[m_piece_id].width[m_orientation]; }
+	[[nodiscard]] int height() const { return s_pieces[m_piece_id].height[m_orientation]; }
 
-private:
-    // temporary L piece for prototype
-    int orientations[4][9] = {
-        {
-            0, 0, 0,
-            1, 1, 0,
-            0, 1, 1,
-        },
-        {
-            0, 1, 0,
-            1, 1, 0,
-            1, 0, 0,
-        },
-        {
-                0, 0, 0,
-                1, 1, 0,
-                0, 1, 1,
-        },
-        {
-                0, 1, 0,
-                1, 1, 0,
-                1, 0, 0,
-        },
-    };
+	// Current piece color
+	[[nodiscard]] Color color() const { return s_pieces[m_piece_id].color; }
 
-    int m_x;
-    int m_y;
-    int m_orientation;
+	// reset and start a new piece falling
+	//void next_piece(int piece_id);
 
-    // temporary constants
-    static constexpr int k_block_size = 32;
-    static constexpr Color k_piece_color = RED;
+	// draw the current piece to the board
+	void draw(int offset_x, int offset_y);
+
+	static constexpr int k_block_size = 32;
 
 private:
+	int m_x 			= 4;
+	int m_y 			= -1;
+	int m_orientation 	= 0;
+	int m_piece_id 		= 1;
+
 	friend class MoveCommand;
 	friend class RotateCommand;
 };
