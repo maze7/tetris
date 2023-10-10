@@ -21,16 +21,22 @@ public:
 
 	void update(float dt) override;
 	void draw() override;
-
-	Game* game() { return m_game; }
-
 	void game_over();
-	int num_game_pieces() const;
+
+	[[nodiscard]] Game* game() { return m_game; }
+	[[nodiscard]] int num_game_pieces() const;
+	[[nodiscard]] int score() const { return m_score; }
+	[[nodiscard]] int rows_cleared() const { return m_rows_cleared; }
+
+	void set_score(int score) { m_score = score; }
+	void set_rows_cleared(int lines) { m_rows_cleared = lines; }
 
 private:
     float m_tick = 0;
 	bool m_show_dialog = false;
 	bool m_paused = false;
+	int m_score = 0;
+	int m_rows_cleared = 0;
 
 	Grid m_grid;
 	Piece m_piece;

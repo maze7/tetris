@@ -3,6 +3,8 @@
 #include "game/play_state.h"
 #include "core/game.h"
 
+static constexpr int points_lookup[] = {0, 100, 300, 600, 1000};
+
 void MoveCommand::execute(Piece& piece, Grid& grid, PlayState& state) {
 	int nx = piece.m_x + m_x, ny = piece.m_y + m_y;
 
@@ -14,7 +16,10 @@ void MoveCommand::execute(Piece& piece, Grid& grid, PlayState& state) {
 		grid.place_piece(piece.m_x, piece.m_y, piece);
 		piece.next_piece((grid.width() / 2) - (piece.width()/2), 0, rand() % state.num_game_pieces());
 
-		grid.clear_rows();
+		// clear and completed rows and earn points
+		auto rows_cleared = grid.clear_rows();
+		state.set_score(state.score() + points_lookup[std::min(rows_cleared, 4)]);
+		state.set_rows_cleared(state.rows_cleared() + rows_cleared);
 	}
 
 	// check for game over condition
