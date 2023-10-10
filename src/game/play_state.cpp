@@ -7,7 +7,7 @@
 #include "core/config.h"
 #include <sstream>
 
-PlayState::PlayState(Game* game) : GameState(game) {
+PlayState::PlayState(Game* game) : GameState(game), m_grid(game->config().board_width, game->config().board_height) {
 	m_num_game_pieces = game->config().game_type == GameType::Normal ? 7 : 9;
 
 	m_piece.next_piece(rand() % m_num_game_pieces);
@@ -28,13 +28,13 @@ void PlayState::update(float dt) {
 				m_tick = 0;
 
 				// move piece down once per tick
-				MoveCommand(0, 1).execute(m_piece, *this);
+				MoveCommand(0, 1).execute(m_piece, m_grid);
 			}
 
 			// get input command from user
 			auto command = InputSystem::handle_input();
 			if (command)
-				command->execute(m_piece, *this);
+				command->execute(m_piece, m_grid);
 		} else {
 			m_piece.next_piece(rand() % m_num_game_pieces);
 			m_next_piece_id = rand() % m_num_game_pieces;
@@ -53,7 +53,13 @@ void PlayState::update(float dt) {
 }
 
 void PlayState::draw() {
-	draw_grid();
+	int grid_x = GetScreenWidth()/2 - (Grid::k_cell_size * m_grid.width())/2;
+	int grid_y = GetScreenHeight()/2 - (Grid::k_cell_size * m_grid.height())/2;
+
+	m_grid.draw(grid_x, grid_y);
+	m_piece.draw(grid_x + Grid::k_border_width, grid_y + Grid::k_border_width);
+
+	//draw_grid();
     draw_stats();
     draw_next_block();
 
@@ -82,7 +88,7 @@ void PlayState::draw() {
     }
 }
 
-void PlayState::draw_stats() {
+void PlayState::draw_stats() const {
     int border_width = 4;
     int rect_width = 300;
     int rect_height = 320;
@@ -118,7 +124,7 @@ void PlayState::draw_stats() {
     DrawText((game_type_text + (m_game->config().game_type == GameType::Normal ? "Normal" : "Extended")).c_str(), left + 16, top + 204, 18, WHITE);
 }
 
-void PlayState::draw_next_block() {
+void PlayState::draw_next_block() const {
     int border_width = 4;
     int rect_width = 128 + 16;
     int rect_height = 128 + 16;
@@ -138,37 +144,4 @@ void PlayState::draw_next_block() {
 			}
 		}
 	}
-}
-
-void PlayState::draw_help() {
-
-}
-
-void PlayState::draw_grid() {
-	const Config& cfg = m_game->config();
-
-	int border_width = 4;
-	int rect_width = 320;
-	int rect_height = 640;
-
-	int left = (GetScreenWidth() / 2) - (rect_width / 2);
-	int right = (GetScreenWidth() / 2) + (rect_width / 2);
-	int top = (GetScreenHeight()/2) - (rect_height/2);
-	int bottom = (GetScreenHeight()/2) + (rect_height/2);
-
-	// Grid Outline
-	DrawRectangle(left, top, rect_width + (2*border_width), rect_height + (2*border_width), GRAY);
-	DrawRectangle(left + border_width, top + border_width, rect_width, rect_height, BLACK);
-
-	// Draw vertical grid lines
-	for (int x = 1; x < cfg.board_width; x++) {
-		DrawLine((left + border_width) + (x * 32), top + border_width, (left + border_width) + (x * 32), bottom + 4, DARKGRAY);
-	}
-
-	// Draw horizontal grid lines
-	for (int y = 1; y < cfg.board_height; y++) {
-		DrawLine(left + border_width, top + border_width + (y * 32), right + 4, top + border_width + (y * 32), DARKGRAY);
-	}
-
-    m_piece.draw(left + border_width, top + border_width);
 }

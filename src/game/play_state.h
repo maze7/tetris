@@ -5,6 +5,7 @@
 #include "piece.h"
 #include "commands/command.h"
 #include "input.h"
+#include "grid.h"
 
 struct Block
 {
@@ -28,12 +29,11 @@ private:
 	bool m_show_dialog = false;
 	bool m_paused = false;
 
+	Grid m_grid;
 	Piece m_piece;
 	int m_next_piece_id;
 	int m_num_game_pieces;
 
-	void draw_stats();
-	void draw_next_block();
-	void draw_help();
-	void draw_grid();
+	void draw_stats() const;
+	void draw_next_block() const;
 };

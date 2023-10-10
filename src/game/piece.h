@@ -24,6 +24,10 @@ public:
 	// returns the id of the current piece in play
 	[[nodiscard]] int current_piece_id() const { return m_piece_id; }
 
+	[[nodiscard]] const PieceDefinition& definition() const { return m_def; }
+
+	[[nodiscard]] const int* layout() const { return m_def.layout[m_orientation]; }
+
 	// reset and start a new piece falling
 	void next_piece(int piece_id);
 
@@ -37,6 +41,8 @@ private:
 	int m_y 			= -1;
 	int m_orientation 	= 0;
 	int m_piece_id 		= 0;
+
+	PieceDefinition m_def;
 
 	friend class MoveCommand;
 	friend class RotateCommand;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/piece.h"
+#include <game/grid.h>
 
 class PlayState;
 class Command
@@ -8,5 +8,5 @@ class Command
 public:
 	virtual ~Command() = default;
 
-	virtual void execute(Piece& piece, PlayState& ps) = 0;
+	virtual void execute(Piece& piece, Grid& grid) = 0;
 };
