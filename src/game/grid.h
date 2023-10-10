@@ -79,6 +79,12 @@ public:
 	 */
 	void place_piece(int x, int y, Piece& piece) const;
 
+	/**
+	 * Clears any completed rows from the grid
+	 * @return number of lines cleared
+	 */
+	int clear_rows();
+
 	static constexpr int k_cell_size = 32;
 	static constexpr int k_border_width = 4;
 private:

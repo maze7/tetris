@@ -13,6 +13,8 @@ void MoveCommand::execute(Piece& piece, Grid& grid, PlayState& state) {
 	if (collision & Collision::Floor || collision & Collision::PieceDown) {
 		grid.place_piece(piece.m_x, piece.m_y, piece);
 		piece.next_piece((grid.width() / 2) - (piece.width()/2), 0, rand() % state.num_game_pieces());
+
+		grid.clear_rows();
 	}
 
 	// check for game over condition

@@ -2,6 +2,7 @@
 
 Grid::Grid(int width, int height): m_width(width), m_height(height) {
 	m_cells = new int[m_width * m_height];
+
 	// fill all cells as empty to begin
 	for (int i = 0; i < m_width * m_height; i++)
 		m_cells[i] = -1;
@@ -82,4 +83,41 @@ void Grid::place_piece(int x, int y, Piece& piece) const {
 			}
 		}
 	}
+}
+
+int Grid::clear_rows() {
+	int num_cleared = 0;
+	std::vector<int> marked_rows;
+
+	// check if any rows can be cleared
+	for (int y = m_height - 1; y >= 0; y--) {
+		int total = 0;
+
+		// check each cell in the row
+		for (int x = 0; x < m_width; x++)
+			if (m_cells[x + y * m_width] >= 0) total++;
+
+		// if all cells are full, clear the row
+		if (total == m_width) {
+			marked_rows.push_back(y);
+		}
+	}
+
+	// clear marked rows and shift rows above downward
+	for (int row : marked_rows) {
+		for (int y = row; y > 0; y--) {
+			for (int x = 0; x < m_width; x++)
+				m_cells[x + y * m_width] = m_cells[x + (y-1) * m_width];
+		}
+
+		num_cleared++;
+	}
+
+	// Clear the topmost rows based on how many rows were cleared
+	for (int i = 0; i < num_cleared; i++) {
+		for (int x = 0; x < m_width; x++)
+			m_cells[x + i * m_width] = -1;
+	}
+
+	return num_cleared;
 }
