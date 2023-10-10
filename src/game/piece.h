@@ -29,7 +29,7 @@ public:
 	[[nodiscard]] const int* layout() const { return m_def.layout[m_orientation]; }
 
 	// reset and start a new piece falling
-	void next_piece(int piece_id);
+	void next_piece(int x, int y, int piece_id);
 
 	// draw the current piece to the board
 	void draw(int offset_x, int offset_y);

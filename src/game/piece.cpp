@@ -12,10 +12,10 @@ void Piece::draw(int offset_x, int offset_y) {
     }
 }
 
-void Piece::next_piece(int piece_id) {
+void Piece::next_piece(int x, int y, int piece_id) {
 	m_piece_id = piece_id;
 	m_def = s_pieces[piece_id];
 	m_orientation = 0;
-	m_x = 4;
-	m_y = 0;
+	m_x = x;
+	m_y = y;
 }

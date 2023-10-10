@@ -40,7 +40,7 @@ void Grid::draw(int x, int y) const {
 	}
 }
 
-int Grid::collides(int x, int y, Piece& piece) const {
+int Grid::collision_check(int x, int y, Piece& piece) const {
 
 	auto layout = piece.layout();
 	int result = Collision::NoCollision;
@@ -60,12 +60,12 @@ int Grid::collides(int x, int y, Piece& piece) const {
 				if (m_cells[(dx + x) + (dy + y) * m_width] != -1) {
 					if (x < piece.x())
 						result |= Collision::PieceLeft;
-					if (x > piece.x())
+					else if (x > piece.x())
 						result |= Collision::PieceRight;
-					if (y > piece.y())
+					else if (y > piece.y())
 						result |= Collision::PieceDown;
-
-					std::cout << "Piece collision: (local: " << dx << "," << dy << "), (grid: " << dx + x << "," << dy + y << ")" << std::endl;
+					else
+						result |= Collision::PieceCollision;
 				}
 			}
 		}

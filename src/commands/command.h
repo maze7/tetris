@@ -8,5 +8,5 @@ class Command
 public:
 	virtual ~Command() = default;
 
-	virtual void execute(Piece& piece, Grid& grid) = 0;
+	virtual void execute(Piece& piece, Grid& grid, PlayState& state) = 0;
 };

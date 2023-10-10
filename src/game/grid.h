@@ -69,7 +69,7 @@ public:
 	 * @param piece piece which should be checked against the grid
 	 * @return
 	 */
-	int collides(int x, int y, Piece& piece) const;
+	int collision_check(int x, int y, Piece& piece) const;
 
 	/**
 	 *

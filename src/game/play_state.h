@@ -24,6 +24,8 @@ public:
 
 	Game* game() { return m_game; }
 
+	void game_over();
+
 private:
     float m_tick = 0;
 	bool m_show_dialog = false;
