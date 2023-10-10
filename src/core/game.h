@@ -27,6 +27,7 @@ private:
 	std::unique_ptr<GameState> m_next_state = nullptr;
 
 	Config m_config;
+	Music m_music;
 
 	int m_width = 0;
 	int m_height = 0;

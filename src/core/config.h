@@ -27,4 +27,6 @@ public:
 
 	int board_width = 10;
 	int board_height = 20;
+
+	bool play_music = true;
 };

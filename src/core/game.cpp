@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include "menu/menu_state.h"
 
-Game::Game() {
+Game::Game() : m_music(LoadMusicStream("res/tetris-audio.wav")) {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(1280, 720, "Tetris");
 	SetExitKey(KEY_NULL);
@@ -12,9 +12,24 @@ Game::Game() {
 
 Game::~Game() {
 	CloseWindow();
+	CloseAudioDevice();
 }
 
 void Game::update(float dt) {
+	// The m_music file is 1:23 so it will stop and start at the end
+	if (!IsMusicStreamPlaying(m_music)) {
+		StopMusicStream(m_music);
+		PlayMusicStream(m_music); // Restart the m_music when it's over
+	}
+
+	UpdateMusicStream(m_music);
+
+	// Toggle mute when the "M" key is pressed
+	if (IsKeyPressed(KEY_M)) {
+		config().play_music = !config().play_music;
+		SetMusicVolume(m_music, config().play_music ? 1.0 : 0.0);
+	}
+
 	m_current_state->update(dt);
 }
 

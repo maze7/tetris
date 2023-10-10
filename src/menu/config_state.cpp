@@ -56,11 +56,11 @@ void ConfigState::draw()
 	if (GuiButton({static_cast<float>(screen_width / 2 +100), static_cast<float>(screen_height/2.5 + 50), 100, 50}, "HARD")){
 		m_game->config().difficulty = DifficultyLevel::Hard;
 	}
-	
+
 	//AI button
 	Rectangle ai_button = { (float)screen_width / 2 - 211, (float)screen_height / 2 + 100, 200, 50 };
 	Rectangle ai_button_outline = { (float) screen_width / 2 - 220, (float)screen_height / 2 +80, 250, 60 };
-	
+
 	//extended game button
 	Rectangle extended_game_button = { (float) screen_width / 2 + 10, (float)screen_height / 2 +100, 200, 50 };
 	Rectangle extended_game_outline = { (float)screen_width / 2, (float)screen_height / 2 +80, 250, 60 };
