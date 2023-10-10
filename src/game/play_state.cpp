@@ -8,8 +8,10 @@
 #include <sstream>
 
 PlayState::PlayState(Game* game) : GameState(game) {
-	m_piece.next_piece(rand() % 3);
-	m_next_piece_id = rand() % 3;
+	m_num_game_pieces = game->config().game_type == GameType::Normal ? 7 : 9;
+
+	m_piece.next_piece(rand() % m_num_game_pieces);
+	m_next_piece_id = rand() % m_num_game_pieces;
 }
 
 PlayState::~PlayState() {
@@ -19,7 +21,7 @@ PlayState::~PlayState() {
 void PlayState::update(float dt) {
     // move piece downwards until bottom of board
 	if (!m_paused) {
-		if ((m_piece.y() + m_piece.height()) < 20) {
+		if ((m_piece.y() + m_piece.height()) < 21) {
 			m_tick += dt;
 
 			if (m_tick >= 0.75) {
@@ -33,6 +35,9 @@ void PlayState::update(float dt) {
 			auto command = InputSystem::handle_input();
 			if (command)
 				command->execute(m_piece, *this);
+		} else {
+			m_piece.next_piece(rand() % m_num_game_pieces);
+			m_next_piece_id = rand() % m_num_game_pieces;
 		}
 	}
 

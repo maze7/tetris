@@ -30,6 +30,7 @@ private:
 
 	Piece m_piece;
 	int m_next_piece_id;
+	int m_num_game_pieces;
 
 	void draw_stats();
 	void draw_next_block();
