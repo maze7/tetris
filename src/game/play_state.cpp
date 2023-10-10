@@ -8,10 +8,8 @@
 #include <sstream>
 
 PlayState::PlayState(Game* game) : GameState(game), m_grid(game->config().board_width, game->config().board_height) {
-	m_num_game_pieces = game->config().game_type == GameType::Normal ? 7 : 9;
-
-	m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, rand() % m_num_game_pieces);
-	m_next_piece_id = rand() % m_num_game_pieces;
+	m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, rand() % num_game_pieces());
+	m_next_piece_id = rand() % num_game_pieces();
 }
 
 PlayState::~PlayState() {
@@ -36,8 +34,8 @@ void PlayState::update(float dt) {
 			if (command)
 				command->execute(m_piece, m_grid, *this);
 		} else {
-			m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, rand() % m_num_game_pieces);
-			m_next_piece_id = rand() % m_num_game_pieces;
+			m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, rand() % num_game_pieces());
+			m_next_piece_id = rand() % num_game_pieces();
 		}
 	}
 
@@ -148,4 +146,8 @@ void PlayState::draw_next_block() const {
 
 void PlayState::game_over() {
 	m_game->set_state(std::make_unique<MenuState>(m_game));
+}
+
+int PlayState::num_game_pieces() const {
+	return m_game->config().game_type == GameType::Normal ? 7 : 9;
 }

@@ -25,6 +25,7 @@ public:
 	Game* game() { return m_game; }
 
 	void game_over();
+	int num_game_pieces() const;
 
 private:
     float m_tick = 0;
@@ -34,7 +35,6 @@ private:
 	Grid m_grid;
 	Piece m_piece;
 	int m_next_piece_id;
-	int m_num_game_pieces;
 
 	void draw_stats() const;
 	void draw_next_block() const;
