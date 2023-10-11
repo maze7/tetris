@@ -9,7 +9,7 @@
 
 PlayState::PlayState(Game* game) : GameState(game), m_grid(game->config().board_width, game->config().board_height) {
 	m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, rand() % num_game_pieces());
-	m_next_piece_id = rand() % num_game_pieces();
+	set_next_piece(rand() % num_game_pieces());
 }
 
 PlayState::~PlayState() {
@@ -34,8 +34,8 @@ void PlayState::update(float dt) {
 			if (command)
 				command->execute(m_piece, m_grid, *this);
 		} else {
-			m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, rand() % num_game_pieces());
-			m_next_piece_id = rand() % num_game_pieces();
+			m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, next_piece());
+			set_next_piece(rand() % num_game_pieces());
 		}
 	}
 

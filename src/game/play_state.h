@@ -27,9 +27,11 @@ public:
 	[[nodiscard]] int num_game_pieces() const;
 	[[nodiscard]] int score() const { return m_score; }
 	[[nodiscard]] int rows_cleared() const { return m_rows_cleared; }
+	[[nodiscard]] int next_piece() const { return m_next_piece_id; }
 
 	void set_score(int score) { m_score = score; }
 	void set_rows_cleared(int lines) { m_rows_cleared = lines; }
+	void set_next_piece(int piece_id) { m_next_piece_id = piece_id; }
 
 private:
     float m_tick = 0;

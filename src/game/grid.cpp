@@ -104,12 +104,12 @@ int Grid::clear_rows() {
 	}
 
 	// clear marked rows and shift rows above downward
-	for (int row : marked_rows) {
+	for (int i = marked_rows.size() - 1; i >= 0; i--) {
+		int row = marked_rows[i];
 		for (int y = row; y > 0; y--) {
 			for (int x = 0; x < m_width; x++)
 				m_cells[x + y * m_width] = m_cells[x + (y-1) * m_width];
 		}
-
 		num_cleared++;
 	}
 
