@@ -81,9 +81,8 @@ void PlayState::draw() {
         DrawText("Do you want to exit?", GetScreenWidth()/2 - 110, GetScreenHeight()/2 - 25, 20, BLACK);
 
         // exit button
-        if (GuiButton({ (float)GetScreenWidth()/2 - 190, (float)GetScreenHeight()/2 + 40, 180, 50}, "Yes")) {
-            m_game->set_state(std::make_unique<MenuState>(m_game));
-        }
+        if (GuiButton({ (float)GetScreenWidth()/2 - 190, (float)GetScreenHeight()/2 + 40, 180, 50}, "Yes"))
+            game_over();
 
 		// resume button
         if (GuiButton({ (float)GetScreenWidth()/2 + 10, (float)GetScreenHeight()/2 + 40, 180, 50}, "No")) {
@@ -138,7 +137,7 @@ void PlayState::draw_next_block() const {
 }
 
 void PlayState::game_over() {
-	m_game->set_state(std::make_unique<GameOverState>(m_game));
+	m_game->set_state(std::make_unique<GameOverState>(m_game, score()));
 }
 
 int PlayState::num_game_pieces() const {
