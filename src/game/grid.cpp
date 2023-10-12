@@ -33,11 +33,11 @@ void Grid::draw(int x, int y, Texture& block, Piece piece) const {
 	}
 
 	// simulate moving piece to the lowest possible location with current x position & rotation
-	//while (!(collision_check(piece.x(), piece.y() + 1, piece) & Collision::Blocked))
-	//	piece.m_y += 1;
-	//
-	//// draw the piece with lowered opacity
-	//piece.draw(x, y, block, 75);
+	while (!(collision_check(piece.x(), piece.y() + 1, piece) & Collision::Blocked))
+		piece.m_y += 1;
+
+	// draw the piece with lowered opacity
+	piece.draw(x, y, block, 25);
 }
 
 int Grid::collision_check(int x, int y, Piece& piece) const {
