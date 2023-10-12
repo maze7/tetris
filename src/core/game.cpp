@@ -1,11 +1,17 @@
 #include "game.h"
 #include "raylib.h"
 #include "menu/menu_state.h"
+#include "scores.h"
 
 Game::Game() : m_music(LoadMusicStream("res/tetris-audio.wav")) {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(1280, 720, "Tetris");
 	SetExitKey(KEY_NULL);
+
+	Scores::load();
+	for (auto [score, name] : Scores::scores()) {
+		std::cout << name << " " << score << std::endl;
+	}
 
 	m_sound_on = LoadTexture("res/sound_on.png");
 	m_sound_off = LoadTexture("res/sound_off.png");
@@ -13,6 +19,8 @@ Game::Game() : m_music(LoadMusicStream("res/tetris-audio.wav")) {
 }
 
 Game::~Game() {
+	Scores::save();
+
 	UnloadTexture(m_sound_on);
 	UnloadTexture(m_sound_off);
 	CloseWindow();
