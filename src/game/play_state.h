@@ -44,6 +44,8 @@ private:
 	Piece m_piece;
 	int m_next_piece_id;
 
+	Texture m_block;
+
 	void draw_stats() const;
 	void draw_next_block() const;
 };

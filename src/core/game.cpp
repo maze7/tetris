@@ -49,7 +49,7 @@ void Game::update(float dt) {
 void Game::draw() {
 	// clear back buffer for drawing
 	BeginDrawing();
-	ClearBackground(BLACK);
+	ClearBackground(Color(28, 31, 94, 255));
 
 	// Draw music mute/unmute icon (this should be visible on all screens)
 	DrawTexture(config().play_music ? m_sound_on : m_sound_off, GetScreenWidth() - 100, GetScreenHeight() - 75, WHITE);

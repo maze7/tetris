@@ -60,7 +60,7 @@ public:
 	 * @param x position of top-left corner of grid
 	 * @param y position of top-left corner of grid
 	 */
-	void draw(int x, int y) const;
+	void draw(int x, int y, Texture& block) const;
 
 	/**
 	 * Determines whether a piece with a given pattern will collide at a specific position

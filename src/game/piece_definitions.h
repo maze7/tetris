@@ -12,7 +12,7 @@ struct PieceDefinition {
 static constexpr PieceDefinition s_pieces[] = {
 	// I Piece
 	{
-		.color = Color(0, 255, 255, 255),
+		.color = Color(0, 240, 240, 255),
 		.width = { 1, 4, 1, 4 },
 		.height = { 4, 1, 4, 1 },
 		.layout = {
@@ -45,7 +45,7 @@ static constexpr PieceDefinition s_pieces[] = {
 
 	// L Piece
 	{
-		.color = Color(0, 0, 255, 255),
+		.color = Color(0, 0, 240, 255),
 		.width = { 3, 2, 3, 2 },
 		.height = { 2, 3, 2, 3 },
 		.layout = {
@@ -78,7 +78,7 @@ static constexpr PieceDefinition s_pieces[] = {
 
 	// Reverse L Piece
 	{
-		.color = Color(150, 100, 0, 255),
+		.color = Color(240, 160, 0, 255),
 		.width = { 3, 2, 3, 2 },
 		.height = { 2, 3, 2, 3 },
 		.layout = {
@@ -111,7 +111,7 @@ static constexpr PieceDefinition s_pieces[] = {
 
 	// Square Piece
 	{
-		.color = Color(255, 255, 0, 255),
+		.color = Color(240, 240, 0, 255),
 		.width = { 2, 2, 2, 2 },
 		.height = { 2, 2, 2, 2 },
 		.layout = {
@@ -144,7 +144,7 @@ static constexpr PieceDefinition s_pieces[] = {
 
 	// S Piece
 	{
-		.color = Color(0, 255, 0, 255),
+		.color = Color(0, 240, 0, 255),
 		.width = { 3, 2, 3, 2 },
 		.height = { 2, 3, 2, 3 },
 		.layout = {
@@ -177,7 +177,7 @@ static constexpr PieceDefinition s_pieces[] = {
 
 	// T Piece
 	{
-		.color = Color(255, 0, 255, 255),
+		.color = Color(160, 0, 240, 255),
 		.width = { 3, 2, 3, 2 },
 		.height = { 2, 3, 2, 3 },
 		.layout = {
@@ -210,7 +210,7 @@ static constexpr PieceDefinition s_pieces[] = {
 
 	// Z Piece
 	{
-		.color = Color(255, 0, 0, 255),
+		.color = Color(240, 0, 0, 255),
 		.width = { 3, 2, 3, 2 },
 		.height = { 2, 3, 2, 3 },
 		.layout = {
@@ -248,7 +248,7 @@ static constexpr PieceDefinition s_pieces[] = {
 
 	// 3 block I piece
 	{
-		.color = Color(0, 255, 255, 255),
+		.color = Color(0, 240, 240, 255),
 		.width = { 1, 3, 1, 3 },
 		.height = { 3, 1, 3, 1 },
 		.layout = {
@@ -281,7 +281,7 @@ static constexpr PieceDefinition s_pieces[] = {
 
 	// 3 block L Piece
 	{
-		.color = Color(0, 0, 255, 255),
+		.color = Color(0, 0, 240, 255),
 		.width = { 3, 2, 3, 2 },
 		.height = { 2, 3, 2, 3 },
 		.layout = {

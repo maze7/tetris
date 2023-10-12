@@ -9,12 +9,14 @@
 #include <menu/game_over.h>
 
 PlayState::PlayState(Game* game) : GameState(game), m_grid(game->config().board_width, game->config().board_height) {
+	m_block = LoadTexture("res/block.png");
+
 	m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, rand() % num_game_pieces());
 	set_next_piece(rand() % num_game_pieces());
 }
 
 PlayState::~PlayState() {
-
+	UnloadTexture(m_block);
 }
 
 void PlayState::update(float dt) {
@@ -52,11 +54,11 @@ void PlayState::update(float dt) {
 }
 
 void PlayState::draw() {
-	int grid_x = GetScreenWidth()/2 - (Grid::k_cell_size * m_grid.width())/2;
-	int grid_y = GetScreenHeight()/2 - (Grid::k_cell_size * m_grid.height())/2;
+	int grid_x = GetScreenWidth()/2 - (Grid::k_cell_size * m_grid.width())/2 - Grid::k_cell_size;
+	int grid_y = GetScreenHeight()/2 - (Grid::k_cell_size * m_grid.height())/2 - Grid::k_cell_size/2;
 
-	m_grid.draw(grid_x, grid_y);
-	m_piece.draw(grid_x + Grid::k_border_width, grid_y + Grid::k_border_width);
+	m_grid.draw(grid_x, grid_y, m_block);
+	m_piece.draw(grid_x, grid_y, m_block);
 
 	//draw_grid();
     draw_stats();
@@ -88,59 +90,44 @@ void PlayState::draw() {
 }
 
 void PlayState::draw_stats() const {
-    int border_width = 4;
-    int rect_width = 300;
-    int rect_height = 320;
-    int main_rect_height = 640;
+	int left = (GetScreenWidth()/2) + ((m_grid.width() * Grid::k_cell_size)/2) + 16;
+	int top = GetScreenHeight()/2 - (Grid::k_cell_size * m_grid.height())/2 - Grid::k_cell_size + 256;
+	int bottom = (GetScreenHeight()/2) + (Grid::k_cell_size * (m_grid.height()/2)) - Grid::k_cell_size;
 
-    int left = (GetScreenWidth()/2) - (rect_width + (rect_width * 0.5)) - 20;
-    int right = (GetScreenWidth() / 2);
-    int top = (GetScreenHeight()/2) - (main_rect_height/2);
-    int bottom = (GetScreenHeight()/2) + (rect_height/2);
+	constexpr int font_size = 24;
 
-    // draw bg & frame
-    DrawRectangle(left, top, rect_width, rect_height, GRAY);
-    DrawRectangle(left + border_width,
-                  top + border_width,
-                  rect_width - border_width * 2,
-                  (rect_height * 0.15), BLACK);
-    DrawRectangle(left + border_width,
-                  top + border_width + (rect_height * 0.15) + border_width,
-                  rect_width - border_width * 2,
-                  (rect_height * 0.8), BLACK);
+	static const std::string difficulties[] = { "EASY", "MEDIUM", "HARD" };
+	static const std::string game_types[] = { "NORMAL", "EXTENDED" };
+	static const std::string player_modes[] = { "PLAYER", "AI" };
 
-	std::string current_score = "Score: ";
-	std::string player_mode_text = "Player Mode: ";
-	std::string game_type_text = "Game Type: ";
-	std::string difficulty_text = "Difficulty: ";
+	const std::string stats[] = {
+		std::string("SCORE  ") + std::to_string(score()),
+		std::string("LINES  ") + std::to_string(rows_cleared()),
+		std::string("LEVEL  ") + difficulties[(int)m_game->config().difficulty],
+		std::string("MODE   ") + player_modes[(int)m_game->config().game_mode],
+		std::string("TYPE   ") + game_types[(int)m_game->config().game_type],
+	};
 
-    // messy magic numbers for now, no point tidying up until we decide on a proper UI
-    DrawText("Stats:", left + 16, top + 16, 20, WHITE);
-    DrawText("Group: 8", left + 16, top + 64, 18, WHITE);
-    DrawText((current_score + std::to_string(score())).c_str(), left + 16, top + 92, 18, WHITE);
-    DrawText((std::string("Lines cleared: ") + std::to_string(rows_cleared())).c_str(), left + 16, top + 120, 18, WHITE);
-    DrawText("Current Level: 0", left + 16, top + 148, 18, WHITE);
-    DrawText((std::string("Player Mode: ") + (m_game->config().game_mode == GameMode::Player ? "Player" : "AI")).c_str(), left + 16, top + 176, 18, WHITE);
-    DrawText((std::string("Game Type: ") + (m_game->config().game_type == GameType::Normal ? "Normal" : "Extended")).c_str(), left + 16, top + 204, 18, WHITE);
+	for (int i = 4; i >= 0; i--) {
+		DrawText(stats[i].c_str(), left, bottom - ((4 - i) * 48), font_size, WHITE);
+	}
 }
 
 void PlayState::draw_next_block() const {
-    int border_width = 4;
-    int rect_width = 128 + 16;
-    int rect_height = 128 + 16;
-    int main_rect_width = 320;
-    int main_rect_height = 640;
+	int left = (GetScreenWidth()/2) + ((m_grid.width() * Grid::k_cell_size)/2) + 32;
+	int top = GetScreenHeight()/2 - (Grid::k_cell_size * m_grid.height())/2 - Grid::k_cell_size + 32;
 
-    int left = (GetScreenWidth()/2) + (main_rect_width/2) + 16;
-    int top = (GetScreenHeight()/2) - (main_rect_height/2);
+	DrawText("NEXT", left, top, 28, WHITE);
 
-    DrawRectangle(left, top, rect_width + (border_width*2), rect_height + (border_width*2), GRAY);
-    DrawRectangle(left + border_width, top + border_width, rect_width, rect_height, BLACK);
+	PieceDefinition def = s_pieces[m_next_piece_id];
 
 	for (int x = 0; x < 4; x++) {
 		for (int y = 0; y < 4; y++) {
-			if (s_pieces[m_next_piece_id].layout[0][x + y * 4]) {
-				DrawRectangle(left + (x * 32) + border_width + 8, top + (y * 32) + border_width + 8, 32, 32, s_pieces[m_next_piece_id].color);
+			if (def.layout[0][x + y * 4]) {
+				DrawTexture(m_block,
+							left + (x * Piece::k_block_size) + (x*2),
+							top + (y * Piece::k_block_size) + (y*2) + 48,
+							def.color);
 			}
 		}
 	}

@@ -32,7 +32,7 @@ public:
 	void next_piece(int x, int y, int piece_id);
 
 	// draw the current piece to the board
-	void draw(int offset_x, int offset_y);
+	void draw(int offset_x, int offset_y, Texture& block);
 
 	static constexpr int k_block_size = 32;
 

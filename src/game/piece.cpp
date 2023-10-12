@@ -1,12 +1,13 @@
 #include "piece.h"
 
-void Piece::draw(int offset_x, int offset_y) {
+void Piece::draw(int offset_x, int offset_y, Texture& block) {
     for (int x = 0; x < width(); x++) {
         for (int y = 0; y < height(); y++) {
 			if (m_def.layout[m_orientation][x + y * 4]) {
-				DrawRectangle(offset_x + (m_x * k_block_size) + (x * k_block_size),
-							  offset_y + (m_y * k_block_size) + (y * k_block_size),
-							  k_block_size, k_block_size, m_def.color);
+				DrawTexture(block,
+							offset_x + (x * Piece::k_block_size) + (x*2) + (m_x*k_block_size) + (m_x*2),
+							offset_y + (y * Piece::k_block_size) + (y*2) + (m_y*k_block_size) + (m_y*2),
+							m_def.color);
 			}
         }
     }

@@ -26,8 +26,8 @@ void MenuState::draw() {
 
 	// random logo effect
 	float logo_size[] = { (float)m_logo.width, (float)m_logo.height };
-	SetShaderValue(m_crt_shader, GetShaderLocation(m_crt_shader, "size"), &logo_size, SHADER_UNIFORM_VEC2);
-	SetShaderValue(m_crt_shader, GetShaderLocation(m_crt_shader, "time"), &m_time, SHADER_UNIFORM_FLOAT);
+	SetShaderValue(m_crt_shader, GetShaderLocation(m_crt_shader, "u_size"), &logo_size, SHADER_UNIFORM_VEC2);
+	SetShaderValue(m_crt_shader, GetShaderLocation(m_crt_shader, "u_time"), &m_time, SHADER_UNIFORM_FLOAT);
 	BeginShaderMode(m_crt_shader);
 	DrawTexture(m_logo, screen_width/2 - m_logo.width/2, screen_height/2 - m_logo.height/2 - 100, WHITE);
 	EndShaderMode();
