@@ -16,6 +16,8 @@ public:
 
 	static void add(const std::string& player, int score);
 
+	static void draw(Rectangle bounds);
+
 private:
 	using ScoreEntry = std::pair<int, std::string>;
 

@@ -58,3 +58,21 @@ void Scores::add(const std::string& name, int score) {
 bool Scores::is_top_10(int score) {
 	return m_scores.size() < 10 || score > m_scores.back().first;
 }
+
+void Scores::draw(Rectangle bounds) {
+	// Draw Scores Background
+	DrawRectangle(bounds.x, bounds.y, bounds.width, bounds.height, Color(18, 20, 61, 255));
+
+	// Draw title
+	DrawText("TOP SCORES", bounds.x + (bounds.width/2) - (MeasureText("TOP SCORES", 28)/2), bounds.y + 16, 28, WHITE);
+
+	// Draw scores
+	for (int i = 0; i < m_scores.size(); i++) {
+		std::string line = std::to_string(i+1) + std::string(". ") + m_scores[i].second + std::string(": ") + std::to_string(m_scores[i].first);
+		auto text_size = MeasureText(line.c_str(), 24);
+
+		int y_pos = bounds.height * 0.25;
+
+		DrawText(line.c_str(), bounds.x + (bounds.width/2) - (text_size/2), bounds.y + y_pos + (i * 32), 24, WHITE);
+	}
+}
