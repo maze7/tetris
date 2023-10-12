@@ -41,6 +41,16 @@ void ConfigState::draw()
 	GuiTextBox(game_width_rec, game_width, 256, width_text);
 	GuiTextBox(game_height_rec, game_height, 256, height_text);
 
+	try {
+		int width = std::stoi(game_width);
+		int height = std::stoi(game_height);
+
+		if (width > 0 & height > 0) {
+			m_game->config().board_width = width;
+			m_game->config().board_height = height;
+		}
+	} catch (std::exception& e) {}
+
 	//Difficulty title and boxes
 	const char *difficulty_text = "DIFFICULTY";
 	const int diff_text_width = MeasureTextEx(GetFontDefault(), difficulty_text, 30, 3).x;
