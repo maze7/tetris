@@ -1,6 +1,7 @@
 #pragma once
 
 #include "piece.h"
+#include "ai_controller.h"
 
 /**
  * Bitmask used to determine what collision results a collision check has returned
@@ -102,4 +103,6 @@ private:
 
 	// grid cell values
 	int* m_cells = nullptr;
+
+	friend class AIController;
 };
