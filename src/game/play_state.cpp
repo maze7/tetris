@@ -7,6 +7,7 @@
 #include "core/config.h"
 #include <sstream>
 #include <menu/game_over.h>
+#include <algorithm>
 
 PlayState::PlayState(Game* game) : GameState(game), m_grid(game->config().board_width, game->config().board_height) {
 	m_block = LoadTexture("res/block.png");
@@ -25,7 +26,10 @@ void PlayState::update(float dt) {
 		if ((m_piece.y() + m_piece.height()) < 21) {
 			m_tick += dt;
 
-			if (m_tick >= 0.75) {
+			// calculate time between game ticks according to difficulty level
+			double downtime = 0.25 * (std::max((int) DifficultyLevel::Hard - (int)m_game->config().difficulty, 1));
+
+			if (m_tick >= downtime) {
 				m_tick = 0;
 
 				// move piece down once per tick

@@ -11,8 +11,17 @@ uniform vec2 u_size;
 void main() {
     vec2 suv = fragTexCoord;
 
-    finalColor = vec4(1.5 * sin(suv.y * u_size.y / 3 + u_time * 15));
-    finalColor = 1.0 - floor(abs(finalColor));
-    finalColor *= 1.1 * vec4(sin(1.0 - suv.y), 0, cos(1.0 - suv.y * 2), 1);
-    finalColor *= texture(texture0, suv);
+    vec4 colorOutput;
+    colorOutput = vec4(1.5 * sin(suv.y * u_size.y / 3 + u_time * 15));
+    colorOutput = 1.0 - floor(abs(colorOutput));
+    colorOutput *= 1.1 * vec4(sin(1.0 - suv.y), 0, cos(1.0 - suv.y * 2), 1);
+    colorOutput *= texture(texture0, suv);
+
+    // Convert the color output to grayscale
+    float grayscale = dot(colorOutput.rgb, vec3(0.299, 0.587, 0.114));
+
+    // Set a small threshold for black. If the grayscale value is below this, it will be transparent.
+    float alpha = (grayscale > 0.05) ? 1.0 : 0.0;
+
+    finalColor = vec4(vec3(grayscale), alpha);
 }
