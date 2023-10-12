@@ -35,6 +35,7 @@ add_executable(tetris
         src/menu/game_over.cpp
         src/menu/game_over.h
         src/core/scores.h
+        src/core/scores.cpp
 )
 
 # core include directories

@@ -15,11 +15,6 @@ public:
 
 private:
 	Texture m_logo;
-	Shader m_crt_shader;
 
 	float m_time = 0;
-
-	// TODO (Callan): We'll need a shader wrapper class which handles these. It's messy leaving them as class members
-	int m_time_loc;
-	int m_size_loc;
 };

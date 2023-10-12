@@ -18,21 +18,8 @@ void Grid::draw(int x, int y, Texture& block) const {
 	int top = y;
 	int bottom = y + (m_height * k_cell_size) + m_height + m_height;
 
-	// Grid Outline
+	// Grid background
 	DrawRectangle(left, top, right-left, bottom-top, Color(18, 20, 61, 255));
-	//DrawRectangle(left + k_border_width, top + k_border_width, right-left, bottom-top, Color(18, 20, 61, 255));
-
-	// Draw Grid Outline
-	//for (int j = 0; j <= m_height; j++) {
-	//	DrawTexture(block, x, y + (j * Piece::k_block_size) + (j*3), WHITE);
-	//	DrawTexture(block, x + (m_width * Piece::k_block_size) + (m_width*3), y + (j * Piece::k_block_size) + (j*3), WHITE);
-	//
-	//	if (j == m_height) {
-	//		for (int i = 0; i <= m_width; i++) {
-	//			DrawTexture(block, x + (i * Piece::k_block_size) + (i*3), y + (j * Piece::k_block_size) + (j*3), WHITE);
-	//		}
-	//	}
-	//}
 
 	// Draw squares
 	for (int i = 0; i < m_width; i++) {
@@ -44,16 +31,6 @@ void Grid::draw(int x, int y, Texture& block) const {
 							s_pieces[m_cells[i + j * m_width]].color);
 		}
 	}
-
-	// Draw vertical grid lines
-	//for (int i = 1; i < m_width; i++) {
-	//	DrawLine((left + k_border_width) + (i * 32), top + k_border_width, (left + k_border_width) + (i * 32), bottom + 4, DARKGRAY);
-	//}
-
-	// Draw horizontal grid lines
-	//for (int i = 1; i < m_height; i++) {
-	//	DrawLine(left + k_border_width, top + k_border_width + (i * 32), right + 4, top + k_border_width + (i * 32), DARKGRAY);
-	//}
 }
 
 int Grid::collision_check(int x, int y, Piece& piece) const {
