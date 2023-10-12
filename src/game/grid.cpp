@@ -12,7 +12,7 @@ Grid::~Grid() {
 	delete[] m_cells;
 }
 
-void Grid::draw(int x, int y, Texture& block) const {
+void Grid::draw(int x, int y, Texture& block, Piece piece) const {
 	int left = x;
 	int right = x + (m_width * k_cell_size) + m_width + m_width;
 	int top = y;
@@ -31,6 +31,13 @@ void Grid::draw(int x, int y, Texture& block) const {
 							s_pieces[m_cells[i + j * m_width]].color);
 		}
 	}
+
+	// simulate moving piece to the lowest possible location with current x position & rotation
+	//while (!(collision_check(piece.x(), piece.y() + 1, piece) & Collision::Blocked))
+	//	piece.m_y += 1;
+	//
+	//// draw the piece with lowered opacity
+	//piece.draw(x, y, block, 75);
 }
 
 int Grid::collision_check(int x, int y, Piece& piece) const {

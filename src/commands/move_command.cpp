@@ -12,7 +12,7 @@ void MoveCommand::execute(Piece& piece, Grid& grid, PlayState& state) {
 	auto collision = grid.collision_check(nx, ny, piece);
 
 	// if the piece will move to the floor or a piece is blocking it horizontally, place the piece in the grid
-	if (collision & Collision::Floor || collision & Collision::PieceDown) {
+	if (collision & Collision::Blocked) {
 		grid.place_piece(piece.m_x, piece.m_y, piece);
 		piece.next_piece((grid.width() / 2) - (piece.width()/2), 0, state.next_piece());
 		state.set_next_piece(rand() % state.num_game_pieces());

@@ -21,7 +21,10 @@ namespace Collision {
 
 		// piece horizontal & any piece collisions
 		PieceHorizontal = PieceLeft | PieceRight,
-		PieceCollision = PieceDown | PieceHorizontal
+		PieceCollision = PieceDown | PieceHorizontal,
+
+		// If a piece or the floor is blocking the piece from moving down
+		Blocked 	= PieceDown | Floor,
 	};
 }
 
@@ -66,7 +69,7 @@ public:
 	 * @param x position of top-left corner of grid
 	 * @param y position of top-left corner of grid
 	 */
-	void draw(int x, int y, Texture& block) const;
+	void draw(int x, int y, Texture& block, Piece piece) const;
 
 	/**
 	 * Determines whether a piece with a given pattern will collide at a specific position

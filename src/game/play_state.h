@@ -40,6 +40,7 @@ private:
 	bool m_paused = false;
 	int m_score = 0;
 	int m_rows_cleared = 0;
+	float m_music_pitch = 1;
 
 	Grid m_grid;
 	Piece m_piece;

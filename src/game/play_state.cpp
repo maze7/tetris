@@ -18,9 +18,17 @@ PlayState::PlayState(Game* game) : GameState(game), m_grid(game->config().board_
 
 PlayState::~PlayState() {
 	UnloadTexture(m_block);
+	SetMusicPitch(m_game->music(), 1);
 }
 
 void PlayState::update(float dt) {
+	// update music pitch as difficulty increases
+	const float pitch = 1 + (0.0075 * std::max(m_rows_cleared, 0));
+	if (pitch != m_music_pitch) {
+		m_music_pitch = pitch;
+		SetMusicPitch(m_game->music(), m_music_pitch);
+	}
+
     // move piece downwards until bottom of board
 	if (!m_paused) {
 		if ((m_piece.y() + m_piece.height()) < 21) {
@@ -61,8 +69,8 @@ void PlayState::draw() {
 	int grid_x = GetScreenWidth()/2 - (Grid::k_cell_size * m_grid.width())/2 - Grid::k_cell_size;
 	int grid_y = GetScreenHeight()/2 - (Grid::k_cell_size * m_grid.height())/2 - Grid::k_cell_size/2;
 
-	m_grid.draw(grid_x, grid_y, m_block);
-	m_piece.draw(grid_x, grid_y, m_block);
+	m_grid.draw(grid_x, grid_y, m_block, m_piece);
+	m_piece.draw(grid_x, grid_y, m_block, 255);
 
 	//draw_grid();
     draw_stats();
@@ -145,7 +153,7 @@ int PlayState::num_game_pieces() const {
 }
 
 double PlayState::speed_multiplier() const {
-	const double base_downtime = 0.30;
+	const double base_downtime = 0.40;
 	const double decrease_factor = 0.10;
 
 	int levels_increase = m_rows_cleared / 10;

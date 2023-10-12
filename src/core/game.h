@@ -17,6 +17,7 @@ public:
 
 	[[nodiscard]] bool should_exit() const;
 	[[nodiscard]] Config& config();
+	[[nodiscard]] Music& music() { return m_music; }
 
     void request_exit() {
         exit_requested = true;

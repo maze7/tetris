@@ -32,7 +32,7 @@ public:
 	void next_piece(int x, int y, int piece_id);
 
 	// draw the current piece to the board
-	void draw(int offset_x, int offset_y, Texture& block);
+	void draw(int offset_x, int offset_y, Texture& block, int alpha);
 
 	static constexpr int k_block_size = 32;
 
@@ -44,6 +44,7 @@ private:
 
 	PieceDefinition m_def;
 
+	friend class Grid;
 	friend class MoveCommand;
 	friend class RotateCommand;
 };
