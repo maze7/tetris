@@ -56,6 +56,12 @@ public:
 	[[nodiscard]] int height() const { return m_height; }
 
 	/**
+	 * Returns whether the top row of the grid is clear
+	 * @return true or false
+	 */
+	[[nodiscard]] bool top_row_clear() const;
+
+	/**
 	 * Draws the entire grid at the specified pixel coordinates
 	 * @param x position of top-left corner of grid
 	 * @param y position of top-left corner of grid

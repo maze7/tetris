@@ -113,3 +113,11 @@ int Grid::clear_rows() {
 
 	return num_cleared;
 }
+
+bool Grid::top_row_clear() const {
+	for (int i = 0; i < width(); i++)
+		if (m_cells[i] != -1)
+			return false;
+
+	return true;
+}

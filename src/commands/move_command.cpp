@@ -24,7 +24,7 @@ void MoveCommand::execute(Piece& piece, Grid& grid, PlayState& state) {
 	}
 
 	// check for game over condition
-	if (grid.collision_check(piece.x(), piece.y(), piece) != Collision::NoCollision) {
+	if (grid.collision_check(piece.x(), piece.y(), piece) != Collision::NoCollision || !grid.top_row_clear()) {
 		state.game_over();
 	}
 
