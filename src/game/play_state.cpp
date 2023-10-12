@@ -145,8 +145,8 @@ int PlayState::num_game_pieces() const {
 }
 
 double PlayState::speed_multiplier() const {
-	const double base_downtime = 0.50;
-	const double decrease_factor = 0.15;
+	const double base_downtime = 0.30;
+	const double decrease_factor = 0.10;
 
 	int levels_increase = m_rows_cleared / 10;
 	double new_downtime = base_downtime - levels_increase * decrease_factor;
