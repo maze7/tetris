@@ -27,7 +27,7 @@ void PlayState::update(float dt) {
 			m_tick += dt;
 
 			// calculate time between game ticks according to difficulty level
-			double downtime = 0.25 * (std::max((int) DifficultyLevel::Hard - (int)m_game->config().difficulty, 1));
+			double downtime = speed_multiplier() * (std::max((int) DifficultyLevel::Hard - (int)m_game->config().difficulty, 1));
 
 			if (m_tick >= downtime) {
 				m_tick = 0;
@@ -142,4 +142,14 @@ void PlayState::game_over() {
 
 int PlayState::num_game_pieces() const {
 	return m_game->config().game_type == GameType::Normal ? 7 : 9;
+}
+
+double PlayState::speed_multiplier() const {
+	const double base_downtime = 0.50;
+	const double decrease_factor = 0.15;
+
+	int levels_increase = m_rows_cleared / 10;
+	double new_downtime = base_downtime - levels_increase * decrease_factor;
+
+	return std::max(new_downtime, 0.10);
 }
