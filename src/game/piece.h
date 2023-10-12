@@ -17,6 +17,7 @@ public:
 	// current piece width & height
 	[[nodiscard]] int width() const { return s_pieces[m_piece_id].width[m_orientation]; }
 	[[nodiscard]] int height() const { return s_pieces[m_piece_id].height[m_orientation]; }
+	[[nodiscard]] int orientation() const { return m_orientation; }
 
 	// Current piece color
 	[[nodiscard]] Color color() const { return s_pieces[m_piece_id].color; }
@@ -27,6 +28,10 @@ public:
 	[[nodiscard]] const PieceDefinition& definition() const { return m_def; }
 
 	[[nodiscard]] const int* layout() const { return m_def.layout[m_orientation]; }
+
+	void set_x(int x) { m_x = x; }
+	void set_y(int y) { m_y = y; }
+	void set_rotation(int x) { m_orientation = x; }
 
 	// reset and start a new piece falling
 	void next_piece(int x, int y, int piece_id);
@@ -44,7 +49,7 @@ private:
 
 	PieceDefinition m_def;
 
-	friend class Grid;
 	friend class MoveCommand;
+	friend class SkipCommand;
 	friend class RotateCommand;
 };

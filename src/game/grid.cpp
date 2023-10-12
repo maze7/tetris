@@ -1,15 +1,10 @@
 #include "grid.h"
 
 Grid::Grid(int width, int height): m_width(width), m_height(height) {
-	m_cells = new int[m_width * m_height];
+	m_cells.resize(m_width * m_height);
 
-	// fill all cells as empty to begin
 	for (int i = 0; i < m_width * m_height; i++)
 		m_cells[i] = -1;
-}
-
-Grid::~Grid() {
-	delete[] m_cells;
 }
 
 void Grid::draw(int x, int y, Texture& block, Piece piece) const {
@@ -34,7 +29,7 @@ void Grid::draw(int x, int y, Texture& block, Piece piece) const {
 
 	// simulate moving piece to the lowest possible location with current x position & rotation
 	while (!(collision_check(piece.x(), piece.y() + 1, piece) & Collision::Blocked))
-		piece.m_y += 1;
+		piece.set_y(piece.y() + 1);
 
 	// draw the piece with lowered opacity
 	piece.draw(x, y, block, 25);
@@ -57,15 +52,17 @@ int Grid::collision_check(int x, int y, Piece& piece) const {
 					result |= Collision::Floor;
 
 				// other pieces check
-				if (m_cells[(dx + x) + (dy + y) * m_width] != -1) {
-					if (x < piece.x())
-						result |= Collision::PieceLeft;
-					else if (x > piece.x())
-						result |= Collision::PieceRight;
-					else if (y > piece.y())
-						result |= Collision::PieceDown;
-					else
-						result |= Collision::PieceCollision;
+				if ((dx + x) < m_width && (dy + y) < m_height) {
+					if (m_cells[(dx + x) + (dy + y) * m_width] != -1) {
+						if (x < piece.x())
+							result |= Collision::PieceLeft;
+						else if (x > piece.x())
+							result |= Collision::PieceRight;
+						else if (y > piece.y())
+							result |= Collision::PieceDown;
+						else
+							result |= Collision::PieceCollision;
+					}
 				}
 			}
 		}
@@ -74,11 +71,12 @@ int Grid::collision_check(int x, int y, Piece& piece) const {
 	return result;
 }
 
-void Grid::place_piece(int x, int y, Piece& piece) const {
+void Grid::place_piece(Piece& piece) {
 	for (int dx = 0; dx < piece.width(); dx++) {
 		for (int dy = 0; dy < piece.height(); dy++) {
 			if (piece.layout()[dx + dy * 4]) {
-				m_cells[(dx + x) + (dy + y) * m_width] = piece.current_piece_id();
+				if ((dx + piece.x()) < m_width && (dy + piece.y()) < m_height)
+					m_cells[(dx + piece.x()) + (dy + piece.y()) * m_width] = piece.current_piece_id();
 			}
 		}
 	}

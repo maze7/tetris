@@ -1,7 +1,7 @@
 #pragma once
 
 #include "piece.h"
-#include "ai_controller.h"
+#include <vector>
 
 /**
  * Bitmask used to determine what collision results a collision check has returned
@@ -29,6 +29,8 @@ namespace Collision {
 	};
 }
 
+class AIController;
+
 /**
  * Class responsible for managing the current state of the tetris grid
  */
@@ -41,11 +43,6 @@ public:
 	 * @param height height of the grid (in cells)
 	 */
 	Grid(int width, int height);
-
-	/**
-	 * Grid destructor
-	 */
-	~Grid();
 
 	/**
 	 * Returns the current width of the grid (in cells)
@@ -87,7 +84,7 @@ public:
 	 * @param y
 	 * @param piece
 	 */
-	void place_piece(int x, int y, Piece& piece) const;
+	void place_piece(Piece& piece);
 
 	/**
 	 * Clears any completed rows from the grid
@@ -102,7 +99,7 @@ private:
 	int m_width, m_height;
 
 	// grid cell values
-	int* m_cells = nullptr;
+	std::vector<int> m_cells;
 
 	friend class AIController;
 };

@@ -6,11 +6,7 @@
 #include "commands/command.h"
 #include "input.h"
 #include "grid.h"
-
-struct Block
-{
-	Color color = ColorAlpha(BLACK, 0);
-};
+#include "ai_controller.h"
 
 class PlayState : public GameState
 {
@@ -34,6 +30,9 @@ public:
 	void set_rows_cleared(int lines) { m_rows_cleared = lines; }
 	void set_next_piece(int piece_id) { m_next_piece_id = piece_id; }
 
+	static constexpr int k_points_lookup[] = {0, 100, 300, 600, 1000};
+	static constexpr double k_downtimes[] = { 0.75, 0.5, 0.25 };
+
 private:
     float m_tick = 0;
 	bool m_show_dialog = false;
@@ -41,6 +40,9 @@ private:
 	int m_score = 0;
 	int m_rows_cleared = 0;
 	float m_music_pitch = 1;
+	bool m_game_over = false;
+
+	AIController m_ai;
 
 	Grid m_grid;
 	Piece m_piece;
@@ -50,4 +52,6 @@ private:
 
 	void draw_stats() const;
 	void draw_next_block() const;
+
+	friend class AIController;
 };

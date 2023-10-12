@@ -2,6 +2,7 @@
 #include "input.h"
 #include "commands/move_command.h"
 #include "commands/rotate_command.h"
+#include "commands/skip_command.h"
 
 std::unique_ptr<Command> InputSystem::handle_input() {
 	// rotate block clockwise
@@ -18,6 +19,10 @@ std::unique_ptr<Command> InputSystem::handle_input() {
 	}
 	else if (IsKeyPressed(KEY_DOWN)) {
 		return std::make_unique<MoveCommand>(0, 1);
+	}
+
+	if (IsKeyPressed(KEY_SPACE)) {
+		return std::make_unique<SkipCommand>();
 	}
 
 	return nullptr;

@@ -51,7 +51,8 @@ void Game::update(float dt) {
 		}
 	}
 
-	m_current_state->update(dt);
+	if (m_current_state)
+		m_current_state->update(dt);
 }
 
 void Game::draw() {
@@ -63,7 +64,8 @@ void Game::draw() {
 	DrawTexture(config().play_music ? m_sound_on : m_sound_off, GetScreenWidth() - 100, GetScreenHeight() - 75, WHITE);
 
 	// draw current game state
-	m_current_state->draw();
+	if (m_current_state)
+		m_current_state->draw();
 
 	// swap buffers
 	EndDrawing();

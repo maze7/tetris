@@ -9,9 +9,12 @@
 #include <menu/game_over.h>
 #include <algorithm>
 
-PlayState::PlayState(Game* game) : GameState(game), m_grid(game->config().board_width, game->config().board_height) {
+PlayState::PlayState(Game* game) :
+	GameState(game),
+	m_grid(game->config().board_width, game->config().board_height),
+	m_ai(*this, m_grid)
+{
 	m_block = LoadTexture("res/block.png");
-
 	m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, rand() % num_game_pieces());
 	set_next_piece(rand() % num_game_pieces());
 }
@@ -22,7 +25,13 @@ PlayState::~PlayState() {
 }
 
 void PlayState::update(float dt) {
-	// update music pitch as difficulty increases
+	if (m_game_over) {
+		m_game->set_state(std::make_unique<GameOverState>(m_game, score()));
+		return;
+	}
+
+
+	// update music speed as difficulty increases
 	const float pitch = 1 + (0.0075 * std::max(m_rows_cleared, 0));
 	if (pitch != m_music_pitch) {
 		m_music_pitch = pitch;
@@ -31,11 +40,11 @@ void PlayState::update(float dt) {
 
     // move piece downwards until bottom of board
 	if (!m_paused) {
-		if ((m_piece.y() + m_piece.height()) < 21) {
+		if ((m_piece.y() + m_piece.height()) < m_grid.height() + 1) {
 			m_tick += dt;
 
 			// calculate time between game ticks according to difficulty level
-			double downtime = speed_multiplier() * (std::max((int) DifficultyLevel::Hard - (int)m_game->config().difficulty, 1));
+			double downtime = speed_multiplier() * 1;
 
 			if (m_tick >= downtime) {
 				m_tick = 0;
@@ -44,10 +53,20 @@ void PlayState::update(float dt) {
 				MoveCommand(0, 1).execute(m_piece, m_grid, *this);
 			}
 
-			// get input command from user
-			auto command = InputSystem::handle_input();
-			if (command)
-				command->execute(m_piece, m_grid, *this);
+			// if we are in a player-controlled game, get the player's input
+			if (m_game->config().game_mode == GameMode::Player) {
+				// get input command from user
+				auto command = InputSystem::handle_input();
+
+				if (command)
+					command->execute(m_piece, m_grid, *this);
+
+			} else { // otherwise execute AI command
+				auto command = m_ai.generate_command(m_piece);
+
+				if (command)
+					command->execute(m_piece, m_grid, *this);
+			}
 		} else {
 			m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, next_piece());
 			set_next_piece(rand() % num_game_pieces());
@@ -66,6 +85,9 @@ void PlayState::update(float dt) {
 }
 
 void PlayState::draw() {
+	if (m_game_over)
+		return;
+
 	int grid_x = GetScreenWidth()/2 - (Grid::k_cell_size * m_grid.width())/2 - Grid::k_cell_size;
 	int grid_y = GetScreenHeight()/2 - (Grid::k_cell_size * m_grid.height())/2 - Grid::k_cell_size/2;
 
@@ -145,7 +167,7 @@ void PlayState::draw_next_block() const {
 }
 
 void PlayState::game_over() {
-	m_game->set_state(std::make_unique<GameOverState>(m_game, score()));
+	m_game_over = true;
 }
 
 int PlayState::num_game_pieces() const {
@@ -153,11 +175,10 @@ int PlayState::num_game_pieces() const {
 }
 
 double PlayState::speed_multiplier() const {
-	const double base_downtime = 0.40;
-	const double decrease_factor = 0.10;
+	const double decrease_factor = 0.15;
 
 	int levels_increase = m_rows_cleared / 10;
-	double new_downtime = base_downtime - levels_increase * decrease_factor;
+	double new_downtime = k_downtimes[(int)m_game->config().difficulty] - levels_increase * decrease_factor;
 
 	return std::max(new_downtime, 0.10);
 }
