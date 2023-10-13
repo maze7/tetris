@@ -2,9 +2,16 @@
 
 #include "command.h"
 
-class SkipCommand : public Command
+
+class DropCommand : public Command
 {
 public:
+	/**
+	 * Drops the piece at the current x position. The piece will fall until it is blocked by a piece below it or the floor
+	 * @param piece The piece to be blocked
+	 * @param grid The grid the piece exists in
+	 * @param state The current play state
+	 */
 	void execute(Piece& piece, Grid& grid, PlayState& state) final {
 		// simulate moving piece to the lowest possible location with current x position & rotation
 		while (!(grid.collision_check(piece.x(), piece.y() + 1, piece) & Collision::Blocked))

@@ -170,7 +170,3 @@ double AIController::heuristic(Grid& grid) const {
 		+  F * wall_pieces
 		+  G * edge_sum;
 }
-
-AIController::~AIController() {
-
-}
