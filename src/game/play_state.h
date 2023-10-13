@@ -44,6 +44,7 @@ private:
 	bool m_game_over = false;
 
 	AIController m_ai;
+	Piece m_ai_prediction;
 
 	Grid m_grid;
 	Piece m_piece;

@@ -4,7 +4,7 @@
 
 AIController::AIController(PlayState& state, Grid& grid) : m_play_state(state), m_grid(grid) {}
 
-std::unique_ptr<Command> AIController::generate_command(Piece piece) {
+AIController::AIResult AIController::generate_command(Piece piece) {
 	int best_r = 0, best_x = 0;
 	double best_eval = -999999999999;
 
@@ -38,20 +38,25 @@ std::unique_ptr<Command> AIController::generate_command(Piece piece) {
 		}
 	}
 
+	Piece goal_piece = piece;
+	// generate target piece location
+	goal_piece.set_x(best_x);
+	goal_piece.set_rotation(best_r);
+
 	if (piece.orientation() != best_r)
-		return std::make_unique<RotateCommand>();
+		return { goal_piece, std::make_unique<RotateCommand>() };
 
 	if (piece.x() < best_x)
-		return std::make_unique<MoveCommand>(1, 0);
+		return { goal_piece, std::make_unique<MoveCommand>(1, 0) };
 	else if (piece.x() > best_x)
-		return std::make_unique<MoveCommand>(-1, 0);
+		return { goal_piece, std::make_unique<MoveCommand>(-1, 0) };
 
-	return std::make_unique<MoveCommand>(0, 1);
+	return { goal_piece, std::make_unique<MoveCommand>(0, 1) };
 }
 
 double AIController::heuristic(Grid& grid) const {
 
-	const double A = -5.03;
+	const double A = -50.03;
 	const double B = 8.0;
 	const double C = -2.31;
 	const double D = -4.59;
@@ -88,4 +93,3 @@ double AIController::heuristic(Grid& grid) const {
 AIController::~AIController() {
 
 }
-

@@ -63,11 +63,11 @@ void PlayState::update(float dt) {
 					command->execute(m_piece, m_grid, *this);
 
 			} else { // otherwise execute AI command
-				if (m_ai_tick >= 0.1) {
-					auto command = m_ai.generate_command(m_piece);
+				if (m_ai_tick >= 0.4) {
+					auto res = std::move(m_ai.generate_command(m_piece));
 
-					if (command)
-						command->execute(m_piece, m_grid, *this);
+					m_ai_prediction = res.target;
+					res.command->execute(m_piece, m_grid, *this);
 
 					m_ai_tick = 0;
 					std::cout << "ai tick" << std::endl;
@@ -97,7 +97,7 @@ void PlayState::draw() {
 	int grid_x = GetScreenWidth()/2 - (Grid::k_cell_size * m_grid.width())/2 - Grid::k_cell_size;
 	int grid_y = GetScreenHeight()/2 - (Grid::k_cell_size * m_grid.height())/2 - Grid::k_cell_size/2;
 
-	m_grid.draw(grid_x, grid_y, m_block, m_piece);
+	m_grid.draw(grid_x, grid_y, m_block, m_game->config().game_mode == GameMode::Player ? m_piece : m_ai_prediction);
 	m_piece.draw(grid_x, grid_y, m_block, 255);
 
 	//draw_grid();
