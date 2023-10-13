@@ -17,7 +17,7 @@ AIController::AIResult AIController::generate_command(Piece piece) {
 			temp_piece.set_x(x); // move piece to current x value
 
 			// if this move will clip outside the board, skip it
-			if (temp_piece.x() + temp_piece.width() >= m_grid.width())
+			if (temp_grid.collision_check(temp_piece.x(), temp_piece.y(), temp_piece) != Collision::NoCollision)
 				continue;
 
 			// simulate moving piece to the lowest possible location with current x position & rotation
@@ -56,10 +56,12 @@ AIController::AIResult AIController::generate_command(Piece piece) {
 
 double AIController::heuristic(Grid& grid) const {
 
-	const double A = -50.03;
-	const double B = 8.0;
+	const double A = -11.78;
+	const double B = 30.0;
 	const double C = -2.31;
-	const double D = -4.59;
+	const double D = -0.59;
+	const double E = 6.65;
+	const double F = 2.52;
 
 	int height_sum = 0;
 	// calculate height penalty
@@ -84,10 +86,24 @@ double AIController::heuristic(Grid& grid) const {
 	for (int x = 0; x < grid.width(); x++)
 		blockades_sum += grid.count_holes(x) > 0 ? 1 : 0;
 
+	// calculate number of pieces touching floor
+	int floor_pieces = 0;
+	for (int x = 0; x < grid.width(); x++)
+		floor_pieces += grid.m_cells[x + (grid.height()-1) * grid.width()] == -1 ? 0 : 1;
+
+	// calculate number of pieces touching walls
+	int wall_pieces = 0;
+	for (int y = 0; y < grid.height(); y++) {
+		wall_pieces += grid.m_cells[0 + y * grid.width()] == -1 ? 0 : 1;
+		wall_pieces += grid.m_cells[(grid.width()-1) * y + grid.width()] == -1 ? 0 : 1;
+	}
+
 	return A * height_sum
 		+  B * clear_sum
 		+  C * holes_sum
-		+  D * blockades_sum;
+		+  D * blockades_sum
+		+  E * floor_pieces
+		+  F * wall_pieces;
 }
 
 AIController::~AIController() {
