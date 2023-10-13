@@ -17,8 +17,8 @@ void ConfigState::update(float dt)
 
 bool width_text = false;
 bool height_text = false;
-char game_width[256];
-char game_height[256];
+char game_width[256] = "10";
+char game_height[256] = "20";
 
 void ConfigState::draw()
 {

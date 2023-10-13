@@ -42,6 +42,7 @@ void PlayState::update(float dt) {
 	if (!m_paused) {
 		if ((m_piece.y() + m_piece.height()) < m_grid.height() + 1) {
 			m_tick += dt;
+			m_ai_tick += dt;
 
 			// calculate time between game ticks according to difficulty level
 			double downtime = speed_multiplier() * 1;
@@ -62,10 +63,15 @@ void PlayState::update(float dt) {
 					command->execute(m_piece, m_grid, *this);
 
 			} else { // otherwise execute AI command
-				auto command = m_ai.generate_command(m_piece);
+				if (m_ai_tick >= 0.1) {
+					auto command = m_ai.generate_command(m_piece);
 
-				if (command)
-					command->execute(m_piece, m_grid, *this);
+					if (command)
+						command->execute(m_piece, m_grid, *this);
+
+					m_ai_tick = 0;
+					std::cout << "ai tick" << std::endl;
+				}
 			}
 		} else {
 			m_piece.next_piece((m_grid.width() / 2) - (m_piece.width()/2), 0, next_piece());

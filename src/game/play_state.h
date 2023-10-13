@@ -35,6 +35,7 @@ public:
 
 private:
     float m_tick = 0;
+	float m_ai_tick = 0;
 	bool m_show_dialog = false;
 	bool m_paused = false;
 	int m_score = 0;

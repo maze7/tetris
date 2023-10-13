@@ -5,50 +5,56 @@
 AIController::AIController(PlayState& state, Grid& grid) : m_play_state(state), m_grid(grid) {}
 
 std::unique_ptr<Command> AIController::generate_command(Piece piece) {
-	int best_rotation = 0, best_position = 0;
-	double best_score = -999999999999;
+	int best_r = 0, best_x = 0;
+	double best_eval = -999999999999;
 
-	for (int r = 0; r < 2; r++) { // for each rotation
-		piece.set_rotation(piece.orientation() + r);
+	for (int r = 0; r < 4; r++) { // for each rotation
 		for (int x = 0; x < m_grid.width(); x++) { // for each column
-			for (int y = 0; y < m_grid.height(); y++) { // for each row
-				Piece p = piece;
-				Grid g = m_grid;
-				p.set_x(x);
-				p.set_y(y);
-				p.set_rotation(r);
+			Grid temp_grid = m_grid; // copy grid so we can generate a dummy solution
+			Piece temp_piece = piece; // copy piece so we can generate a dummy solution
 
-				if (g.collision_check(p.x(), p.y(), p) == Collision::NoCollision &&
-					g.collision_check(p.x(), p.y() + 1, p) == Collision::Blocked) {
-					g.place_piece(p);
+			temp_piece.set_rotation(r); // move piece to current rotation
+			temp_piece.set_x(x); // move piece to current x value
 
-					double h = heuristic(g);
-					if (h > best_score) {
-						best_rotation = r;
-						best_position = x;
-						best_score = h;
-					}
-				}
+			// if this move will clip outside the board, skip it
+			if (temp_piece.x() + temp_piece.width() >= m_grid.width())
+				continue;
+
+			// simulate moving piece to the lowest possible location with current x position & rotation
+			while (!(temp_grid.collision_check(temp_piece.x(), temp_piece.y() + 1, temp_piece) & Collision::Blocked))
+				temp_piece.set_y(temp_piece.y() + 1);
+
+			// place the temp piece in the temp grid
+			temp_grid.place_piece(temp_piece);
+
+			// evaluate the resulting grid
+			double h = heuristic(temp_grid);
+
+			if (h > best_eval) {
+				best_r = r;
+				best_x = x;
+				best_eval = h;
 			}
 		}
 	}
 
-	if (piece.x() < best_position)
-		return std::make_unique<MoveCommand>(1, 0);
-	else if (piece.x() > best_position)
-		return std::make_unique<MoveCommand>(-1, 0);
-	else if (piece.orientation() != best_rotation)
+	if (piece.orientation() != best_r)
 		return std::make_unique<RotateCommand>();
 
-	return nullptr;
+	if (piece.x() < best_x)
+		return std::make_unique<MoveCommand>(1, 0);
+	else if (piece.x() > best_x)
+		return std::make_unique<MoveCommand>(-1, 0);
+
+	return std::make_unique<MoveCommand>(0, 1);
 }
 
 double AIController::heuristic(Grid& grid) const {
 
-	const double A = -0.510066;
-	const double B = -0.760666;
-	const double C = -3.5;
-	const double D = 8.0;
+	const double A = -5.03;
+	const double B = 8.0;
+	const double C = -2.31;
+	const double D = -4.59;
 
 	int height_sum = 0;
 	// calculate height penalty
@@ -57,16 +63,26 @@ double AIController::heuristic(Grid& grid) const {
 		while (y < grid.height() && grid.m_cells[x + y * grid.width()] == -1)
 			y++;
 
-		height_sum += m_grid.height() - y;
+		height_sum += grid.height() - y;
 	}
-
-
 
 	// calculate cleared rows
 	int clear_sum = grid.clear_rows();
 
+	// calculate holes
+	int holes_sum = 0;
+	for (int x = 0; x < grid.width(); x++)
+		holes_sum += grid.count_holes(x);
+
+	// calculate blockades
+	int blockades_sum = 0;
+	for (int x = 0; x < grid.width(); x++)
+		blockades_sum += grid.count_holes(x) > 0 ? 1 : 0;
+
 	return A * height_sum
-		+  B * clear_sum;
+		+  B * clear_sum
+		+  C * holes_sum
+		+  D * blockades_sum;
 }
 
 AIController::~AIController() {

@@ -63,6 +63,12 @@ public:
 	[[nodiscard]] bool top_row_clear() const;
 
 	/**
+	 * Counts the number of holes in the grid for a specific column
+	 * @return integer representing the number of holes
+	 */
+	 [[nodiscard]] int count_holes(int x) const;
+
+	/**
 	 * Draws the entire grid at the specified pixel coordinates
 	 * @param x position of top-left corner of grid
 	 * @param y position of top-left corner of grid

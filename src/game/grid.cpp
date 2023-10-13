@@ -126,3 +126,23 @@ bool Grid::top_row_clear() const {
 
 	return true;
 }
+
+int Grid::count_holes(int x) const {
+	// search column until first block
+	int y = 0, sum = 0;
+	while (y < height() && m_cells[x + y * width()] == -1)
+		y++;
+
+	// if we have hit the bottom of the board, no holes exist for this column
+	if (y == height()) {
+		return 0;
+	}
+	else { // otherwise, count the holes
+		while (y < height()) {
+			sum += m_cells[x + y * width()] == -1 ? 1 : 0;
+			y++;
+		}
+	}
+
+	return sum;
+}
