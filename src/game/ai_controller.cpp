@@ -20,6 +20,18 @@ AIController::AIResult AIController::generate_command(Piece piece) {
 			if (temp_grid.collision_check(temp_piece.x(), temp_piece.y(), temp_piece) != Collision::NoCollision)
 				continue;
 
+			// ensure goal position is accessible
+			Piece move_check = temp_piece;
+			while (temp_grid.collision_check(move_check.x(), move_check.y(), move_check) != Collision::NoCollision) {
+				if (move_check.x() < best_x)
+					move_check.set_x(move_check.x() + 1);
+				else if (move_check.x() > best_x)
+					move_check.set_x(move_check.x() - 1);
+			}
+
+			if (move_check.x() != x)
+				continue;
+
 			// simulate moving piece to the lowest possible location with current x position & rotation
 			while (!(temp_grid.collision_check(temp_piece.x(), temp_piece.y() + 1, temp_piece) & Collision::Blocked))
 				temp_piece.set_y(temp_piece.y() + 1);
@@ -56,12 +68,12 @@ AIController::AIResult AIController::generate_command(Piece piece) {
 
 double AIController::heuristic(Grid& grid) const {
 
-	const double A = -11.78;
+	const double A = -9.78;
 	const double B = 30.0;
 	const double C = -2.31;
 	const double D = -0.59;
-	const double E = 6.65;
-	const double F = 2.52;
+	const double E = 7.65;
+	const double F = 1.75;
 
 	int height_sum = 0;
 	// calculate height penalty
