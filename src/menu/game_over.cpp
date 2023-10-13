@@ -9,7 +9,10 @@ char name[256];
 
 GameOverState::GameOverState(Game* game, int score) : GameState(game), m_score(score) {
 	m_game_over = LoadTexture("res/game_over.png");
-	m_should_save_score = Scores::is_top_10(m_score) && m_score > 0;
+	m_should_save_score = Scores::is_top_10(m_score) && m_score > 0 && m_game->config().game_mode != GameMode::AI;
+
+	if (m_game->config().game_mode == GameMode::AI)
+		Scores::add("AI", score);
 }
 
 GameOverState::~GameOverState() {
