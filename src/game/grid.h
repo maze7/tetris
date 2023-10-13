@@ -68,6 +68,14 @@ public:
 	 */
 	 [[nodiscard]] int count_holes(int x) const;
 
+	 /**
+	  * Returns the value of the cell at the specified coordinates
+	  * @param x
+	  * @param y
+	  * @return
+	  */
+	 [[nodiscard]] int cell_value(int x, int y) const;
+
 	/**
 	 * Draws the entire grid at the specified pixel coordinates
 	 * @param x position of top-left corner of grid

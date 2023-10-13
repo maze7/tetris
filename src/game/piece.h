@@ -9,6 +9,7 @@ class Piece
 {
 public:
 	Piece() = default;
+	Piece(int x, int y, int piece_id);
 
 	// current piece position
 	[[nodiscard]] int x() const { return m_x; }

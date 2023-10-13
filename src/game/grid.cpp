@@ -146,3 +146,10 @@ int Grid::count_holes(int x) const {
 
 	return sum;
 }
+
+int Grid::cell_value(int x, int y) const {
+	if (x < 0 || x >= width() || y < 0 || y >= height())
+		return -1;
+
+	return m_cells[x + y * width()];
+}

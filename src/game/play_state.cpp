@@ -63,7 +63,7 @@ void PlayState::update(float dt) {
 					command->execute(m_piece, m_grid, *this);
 
 			} else { // otherwise execute AI command
-				if (m_ai_tick >= 0.15) {
+				if (m_ai_tick >= 0.025) {
 					auto res = std::move(m_ai.generate_command(m_piece));
 
 					m_ai_prediction = res.target;
