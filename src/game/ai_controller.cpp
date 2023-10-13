@@ -154,19 +154,11 @@ double AIController::heuristic(Grid& grid) const {
 		}
 	}
 
-	const double A = -17.78;
-	const double B = 32.0;
-	const double C = -0.22;
-	const double D = -0.011;
-	const double E = 1.85;
-	const double F = 0.32;
-	const double G = 0.37;
-
-	return A * height_sum
-		+  B * clear_sum
-		+  C * holes_sum
-		+  D * blockades_sum
-		+  E * floor_pieces
-		+  F * wall_pieces
-		+  G * edge_sum;
+	return -17.78 * height_sum
+		+   32.0 * clear_sum
+		+  -0.22 * holes_sum
+		+  -0.011 * blockades_sum
+		+   1.85 * floor_pieces
+		+   0.32 * wall_pieces
+		+   0.37 * edge_sum;
 }
