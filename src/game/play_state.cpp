@@ -70,7 +70,6 @@ void PlayState::update(float dt) {
 					res.command->execute(m_piece, m_grid, *this);
 
 					m_ai_tick = 0;
-					std::cout << "ai tick" << std::endl;
 				}
 			}
 		} else {
