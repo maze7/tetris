@@ -1,6 +1,6 @@
-# 2805ICT - Tetris
+# Tetris
 
-A collaborative group assignment for 2805ICT at Griffith University. This project implements a simple tetris clone 
+This project implements a simple tetris clone 
 using software engineering best practices.
 
 # Getting Started
