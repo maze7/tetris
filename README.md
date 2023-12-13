@@ -1,7 +1,6 @@
 # Tetris
 
-This project implements a simple tetris clone 
-using software engineering best practices.
+This project implements a simple tetris clone, including an AI which plays itself.
 
 # Getting Started
 
